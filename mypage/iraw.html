@@ -258,6 +258,93 @@
   .stat-value { font-family: var(--serif); font-size: 20px; color: var(--gold); }
 
   /* ════════════════════════════════
+     LANGUAGES SECTION
+  ════════════════════════════════ */
+  #languages-section {
+    padding: 56px 72px 40px;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+  }
+
+  .languages-heading {
+    font-family: var(--serif);
+    font-size: clamp(48px, 7vw, 88px);
+    font-weight: 900;
+    letter-spacing: 6px;
+    color: var(--text);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .languages-heading span {
+    color: var(--gold);
+  }
+
+  .languages-subline {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 5px;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 40px;
+  }
+
+  .lang-tabs {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .lang-tab {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 16px 28px;
+    border: 1px solid var(--border);
+    background: var(--card);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+  }
+
+  .lang-tab.active {
+    border-color: var(--gold);
+    background: rgba(212,168,67,0.08);
+  }
+
+  .lang-tab:hover {
+    border-color: var(--azure);
+    background: rgba(46,107,196,0.1);
+  }
+
+  .lang-tab .lt-native {
+    font-family: serif;
+    font-size: 22px;
+    color: var(--gold2);
+    direction: rtl;
+    line-height: 1;
+  }
+
+  .lang-tab .lt-name {
+    font-family: var(--serif);
+    font-size: 14px;
+    letter-spacing: 2px;
+    color: var(--text);
+    text-transform: uppercase;
+  }
+
+  .lang-tab .lt-tag {
+    font-family: var(--mono);
+    font-size: 8px;
+    letter-spacing: 2px;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  .lang-tab.active .lt-tag {
+    color: var(--gold);
+  }
+  /* ════════════════════════════════
      EMBEDDED CONTENT PANEL
   ════════════════════════════════ */
   #embedded-panel {
@@ -559,6 +646,49 @@
     <div class="stat"><span class="stat-label">Script</span><span class="stat-value">Perso-Arabic</span></div>
     <div class="stat"><span class="stat-label">Language Family</span><span class="stat-value">Indo-Iranian</span></div>
     <div class="stat"><span class="stat-label">Official In</span><span class="stat-value">3 Countries</span></div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════════
+  LANGUAGES SECTION
+════════════════════════════════════════════ -->
+<div id="languages-section">
+  <div class="languages-subline">Explore by Language</div>
+  <div class="languages-heading">LANG<span>UA</span>GES</div>
+
+  <div class="lang-tabs">
+
+    <div class="lang-tab active">
+      <span class="lt-native">فارسی</span>
+      <span class="lt-name">Persian</span>
+      <span class="lt-tag">● Active</span>
+    </div>
+
+    <div class="lang-tab">
+      <span class="lt-native">عربی</span>
+      <span class="lt-name">Arabic</span>
+      <span class="lt-tag">Coming Soon</span>
+    </div>
+
+    <div class="lang-tab">
+      <span class="lt-native">اردو</span>
+      <span class="lt-name">Urdu</span>
+      <span class="lt-tag">Coming Soon</span>
+    </div>
+
+    <div class="lang-tab">
+      <span class="lt-native">हिन्दी</span>
+      <span class="lt-name">Hindi</span>
+      <span class="lt-tag">Coming Soon</span>
+    </div>
+
+    <div class="lang-tab">
+      <span class="lt-native">Türkçe</span>
+      <span class="lt-name">Turkish</span>
+      <span class="lt-tag">Coming Soon</span>
+    </div>
+
   </div>
 </div>
 

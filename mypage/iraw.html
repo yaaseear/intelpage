@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auto-Summarizing Showcase</title>
+    <style>
+        /* FUNDAMENTAL 1: CSS Styling */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Segoe UI', sans-serif; background-color: #f4f4f4; color: #333; line-height: 1.6; }
+        
+        /* The Sticky Summary Bar */
+        #summary-bar {
+            position: sticky;
+            top: 0;
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            padding: 20px;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            opacity: 0;
+            animation: slideDown 0.5s ease-out forwards;
+        }
+        @keyframes slideDown { to { opacity: 1; transform: translateY(0); } }
+        .summary-content { max-width: 800px; margin: 0 auto; text-align: center; }
+        .summary-title { font-size: 1.2rem; font-weight: bold; color: #f1c40f; margin-bottom: 10px; text-transform: uppercase; }
+        .summary-text { font-size: 0.95rem; }
+
+        /* Main Content Area */
+        .main-container { max-width: 800px; margin: 40px auto; background: white; padding: 40px; box-shadow: 0 0 20px rgba(0,0,0,0.05); border-radius: 8px; }
+        h1 { margin-bottom: 20px; color: #2c3e50; border-bottom: 2px solid #f1c40f; display: inline-block; }
+        p { margin-bottom: 15px; text-align: justify; }
+        .line-number { color: #ccc; font-size: 0.8rem; float: left; margin-right: 10px; font-family: monospace; }
+        
+        /* Hide the raw content source if you want, but we keep it visible for this demo */
+        #raw-content-source { display: none; } 
+    </style>
+</head>
+<body>
+
+    <!-- SECTION 1: The Auto-Generated Summary Bar -->
+    <div id="summary-bar">
+        <div class="summary-content">
+            <div class="summary-title">Auto-Generated Summary</div>
+            <div class="summary-text" id="summary-display">
+                Generating summary...
+            </div>
+        </div>
+    </div>
+
+    <!-- SECTION 2: The Main Content -->
+    <div class="main-container">
+        <h1>Deep Dive: History & Geography</h1>
+        
+        <!-- This is where you paste ANY long text. The JS will read this. -->
+        <div id="raw-content-source">
+            <p>Iraq is widely considered the cradle of civilization, home to the ancient Sumerians. It is geographically defined by the Tigris and Euphrates rivers (Mesopotamia). The country possesses some of the world's largest proven oil reserves. Baghdad, the capital, was once the intellectual center of the Islamic Golden Age. It is a land of diverse cultures, containing historic sites like Babylon and Ur. The history of Iraq dates back to the 6th millennium BC. Mesopotamia, meaning 'land between rivers', is the ancient name for this region. The Sumerians invented cuneiform, one of the earliest forms of writing. The Code of Hammurabi was one of the first written legal codes in history. Baghdad was founded in the 8th century by the Abbasid Caliphate. The Hanging Gardens of Babylon were one of the Seven Wonders of the Ancient World. Iraq has a diverse population including Arabs, Kurds, Turkmen, and Assyrians. The Tigris and Euphrates rivers provide essential water for agriculture. Oil was discovered in Iraq in the early 20th century, transforming its economy. The region has been a crossroads of trade and culture for millennia. Ancient cities like Nineveh and Nimrud lie within modern Iraq. The Ziggurat of Ur is one of the best-preserved structures from ancient Sumer. Iraq's cuisine includes famous dishes like Masgouf and Dolma. The Kurdish region in the north has its own autonomous government. Basra, in the south, is a major port city near the Persian Gulf.</p>
+            <!-- Repeating to simulate 200 lines for the demo -->
+            <p>Iraq is widely considered the cradle of civilization, home to the ancient Sumerians. It is geographically defined by the Tigris and Euphrates rivers (Mesopotamia). The country possesses some of the world's largest proven oil reserves. Baghdad, the capital, was once the intellectual center of the Islamic Golden Age. It is a land of diverse cultures, containing historic sites like Babylon and Ur. The history of Iraq dates back to the 6th millennium BC. Mesopotamia, meaning 'land between rivers', is the ancient name for this region. The Sumerians invented cuneiform, one of the earliest forms of writing. The Code of Hammurabi was one of the first written legal codes in history. Baghdad was founded in the 8th century by the Abbasid Caliphate. The Hanging Gardens of Babylon were one of the Seven Wonders of the Ancient World. Iraq has a diverse population including Arabs, Kurds, Turkmen, and Assyrians. The Tigris and Euphrates rivers provide essential water for agriculture. Oil was discovered in Iraq in the early 20th century, transforming its economy. The region has been a crossroads of trade and culture for millennia. Ancient cities like Nineveh and Nimrud lie within modern Iraq. The Ziggurat of Ur is one of the best-preserved structures from ancient Sumer. Iraq's cuisine includes famous dishes like Masgouf and Dolma. The Kurdish region in the north has its own autonomous government. Basra, in the south, is a major port city near the Persian Gulf.</p>
+            <p>Iraq is widely considered the cradle of civilization, home to the ancient Sumerians. It is geographically defined by the Tigris and Euphrates rivers (Mesopotamia). The country possesses some of the world's largest proven oil reserves. Baghdad, the capital, was once the intellectual center of the Islamic Golden Age. It is a land of diverse cultures, containing historic sites like Babylon and Ur. The history of Iraq dates back to the 6th millennium BC. Mesopotamia, meaning 'land between rivers', is the ancient name for this region. The Sumerians invented cuneiform, one of the earliest forms of writing. The Code of Hammurabi was one of the first written legal codes in history. Baghdad was founded in the 8th century by the Abbasid Caliphate. The Hanging Gardens of Babylon were one of the Seven Wonders of the Ancient World. Iraq has a diverse population including Arabs, Kurds, Turkmen, and Assyrians. The Tigris and Euphrates rivers provide essential water for agriculture. Oil was discovered in Iraq in the early 20th century, transforming its economy. The region has been a crossroads of trade and culture for millennia. Ancient cities like Nineveh and Nimrud lie within modern Iraq. The Ziggurat of Ur is one of the best-preserved structures from ancient Sumer. Iraq's cuisine includes famous dishes like Masgouf and Dolma. The Kurdish region in the north has its own autonomous government. Basra, in the south, is a major port city near the Persian Gulf.</p>
+            <p>Iraq is widely considered the cradle of civilization, home to the ancient Sumerians. It is geographically defined by the Tigris and Euphrates rivers (Mesopotamia). The country possesses some of the world's largest proven oil reserves. Baghdad, the capital, was once the intellectual center of the Islamic Golden Age. It is a land of diverse cultures, containing historic sites like Babylon and Ur. The history of Iraq dates back to the 6th millennium BC. Mesopotamia, meaning 'land between rivers', is the ancient name for this region. The Sumerians invented cuneiform, one of the earliest forms of writing. The Code of Hammurabi was one of the first written legal codes in history. Baghdad was founded in the 8th century by the Abbasid Caliphate. The Hanging Gardens of Babylon were one of the Seven Wonders of the Ancient World. Iraq has a diverse population including Arabs, Kurds, Turkmen, and Assyrians. The Tigris and Euphrates rivers provide essential water for agriculture. Oil was discovered in Iraq in the early 20th century, transforming its economy. The region has been a crossroads of trade and culture for millennia. Ancient cities like Nineveh and Nimrud lie within modern Iraq. The Ziggurat of Ur is one of the best-preserved structures from ancient Sumer. Iraq's cuisine includes famous dishes like Masgouf and Dolma. The Kurdish region in the north has its own autonomous government. Basra, in the south, is a major port city near the Persian Gulf.</p>
+             <p>Iraq is widely considered the cradle of civilization, home to the ancient Sumerians. It is geographically defined by the Tigris and Euphrates rivers (Mesopotamia). The country possesses some of the world's largest proven oil reserves. Baghdad, the capital, was once the intellectual center of the Islamic Golden Age. It is a land of diverse cultures, containing historic sites like Babylon and Ur. The history of Iraq dates back to the 6th millennium BC. Mesopotamia, meaning 'land between rivers', is the ancient name for this region. The Sumerians invented cuneiform, one of the earliest forms of writing. The Code of Hammurabi was one of the first written legal codes in history. Baghdad was founded in the 8th century by the Abbasid Caliphate. The Hanging Gardens of Babylon were one of the Seven Wonders of the Ancient World. Iraq has a diverse population including Arabs, Kurds, Turkmen, and Assyrians. The Tigris and Euphrates rivers provide essential water for agriculture. Oil was discovered in Iraq in the early 20th century, transforming its economy. The region has been a crossroads of trade and culture for millennia. Ancient cities like Nineveh and Nimrud lie within modern Iraq. The Ziggurat of Ur is one of the best-preserved structures from ancient Sumer. Iraq's cuisine includes famous dishes like Masgouf and Dolma. The Kurdish region in the north has its own autonomous government. Basra, in the south, is a major port city near the Persian Gulf.</p>
+        </div>
+
+        <!-- This div will be filled by JavaScript -->
+        <div id="content-body"></div>
+    </div>
+
+    <script>
+        // FUNDAMENTAL 2: JavaScript Logic for Auto-Summarization
+        
+        window.onload = function() {
+            // 1. Get the raw text from the hidden source
+            const rawContent = document.getElementById('raw-content-source').innerText;
+            
+            // 2. Split text into sentences using Regex (looks for . ! or ?)
+            // This is a basic splitter. Real AI is more complex.
+            const sentences = rawContent.match( /[^\.!\?]+[\.!\?]+/g ) || [];
+            
+            // 3. Take the first 5 sentences for the Summary
+            const summarySentences = sentences.slice(0, 5);
+            
+            // 4. Take the rest for the Body (to simulate 200 lines visually)
+            // We will repeat the remaining sentences to fill space for this demo
+            const bodySentences = sentences.slice(5); 
+            
+            // --- DISPLAY SUMMARY ---
+            const summaryDisplay = document.getElementById('summary-display');
+            summaryDisplay.innerHTML = summarySentences.map((s, i) => `${i+1}. ${s.trim()}`).join('<br>');
+            
+            // --- DISPLAY BODY (Formatting the 200 lines) ---
+            const contentBody = document.getElementById('content-body');
+            let lineCount = 1;
+            
+            // We loop through the body sentences and create paragraphs
+            // To ensure we hit ~200 lines visually, we might repeat if text is short
+            while(lineCount <= 200) {
+                const p = document.createElement('p');
+                // Pick a sentence from our body list (cycling through if needed)
+                const text = bodySentences[(lineCount - 1) % bodySentences.length]; 
+                p.innerHTML = `<span class="line-number">Line ${lineCount}:</span> ${text.trim()}`;
+                contentBody.appendChild(p);
+                lineCount++;
+            }
+        };
+    </script>
+</body>
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Persian Language — AI Auto-Summary</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=IBM+Plex+Mono:wght@300;400;600&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg:       #06080f;
+    --surface:  #0d1018;
+    --card:     #111520;
+    --lapis:    #1a3a6b;
+    --azure:    #2e6bc4;
+    --gold:     #d4a843;
+    --gold2:    #f0cc70;
+    --amber:    #e8832a;
+    --text:     #dde4f0;
+    --muted:    #7a8099;
+    --border:   #1e2438;
+    --mono:     'IBM Plex Mono', monospace;
+    --serif:    'Cinzel', serif;
+    --body:     'Crimson Pro', serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--body);
+    font-size: 18px;
+    line-height: 1.85;
+    overflow-x: hidden;
+  }
+
+  /* ════════════════════════════════
+     AI SUMMARY BAR
+  ════════════════════════════════ */
+  #ai-bar {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 9999;
+    background: linear-gradient(135deg, #060a14 0%, #0a0f1e 60%, #060d10 100%);
+    border-bottom: 1px solid var(--gold);
+    padding: 10px 28px 10px 20px;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    transform: translateY(-110%);
+    box-shadow: 0 6px 60px rgba(212,168,67,0.12), 0 1px 0 rgba(212,168,67,0.3);
+    transition: transform 0s;
+  }
+
+  #ai-bar.visible {
+    transform: translateY(0);
+    transition: transform 0.45s cubic-bezier(.22,.68,0,1.15);
+  }
+
+  .bar-badge {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    padding-top: 1px;
+    flex-shrink: 0;
+  }
+
+  .bar-badge .ai-icon {
+    width: 22px; height: 22px;
+    background: linear-gradient(135deg, var(--azure), var(--gold));
+    border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px;
+  }
+
+  .bar-badge .ai-label {
+    font-family: var(--mono);
+    font-size: 7px;
+    letter-spacing: 2px;
+    color: var(--gold);
+    text-transform: uppercase;
+  }
+
+  #summary-content {
+    flex: 1;
+    min-height: 72px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1px;
+  }
+
+  /* Loading state */
+  .loading-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 0;
+  }
+
+  .spinner {
+    width: 14px; height: 14px;
+    border: 2px solid var(--border);
+    border-top-color: var(--gold);
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    flex-shrink: 0;
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .loading-text {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 1px;
+  }
+
+  .loading-dots::after {
+    content: '';
+    animation: dots 1.2s steps(4, end) infinite;
+  }
+
+  @keyframes dots {
+    0%   { content: ''; }
+    25%  { content: '.'; }
+    50%  { content: '..'; }
+    75%  { content: '...'; }
+    100% { content: ''; }
+  }
+
+  /* Summary lines */
+  .sum-line {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    color: var(--text);
+    opacity: 0;
+    transform: translateX(-6px);
+    line-height: 1.5;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: none;
+  }
+
+  .sum-line.show {
+    animation: lineReveal 0.28s ease forwards;
+  }
+
+  .sum-line .num  { color: var(--gold); margin-right: 6px; }
+  .sum-line .key  { color: var(--gold2); }
+
+  @keyframes lineReveal {
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  .bar-status {
+    font-family: var(--mono);
+    font-size: 8px;
+    letter-spacing: 2px;
+    color: var(--muted);
+    text-transform: uppercase;
+    padding-top: 2px;
+    flex-shrink: 0;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+
+  .bar-status.show { opacity: 1; }
+
+  /* ════════════════════════════════
+     HERO
+  ════════════════════════════════ */
+  #hero {
+    margin-top: 72px;
+    padding: 80px 72px 60px;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid var(--border);
+  }
+
+  #hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 70% 60% at 80% 30%, rgba(26,58,107,0.35) 0%, transparent 65%),
+      radial-gradient(ellipse 50% 70% at 10% 80%, rgba(212,168,67,0.08) 0%, transparent 55%);
+    pointer-events: none;
+  }
+
+  /* Persian script decoration */
+  .persian-bg-text {
+    position: absolute;
+    top: -10px; right: 40px;
+    font-size: 180px;
+    color: rgba(212,168,67,0.04);
+    font-family: serif;
+    line-height: 1;
+    user-select: none;
+    pointer-events: none;
+    letter-spacing: -10px;
+  }
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 5px;
+    color: var(--azure);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+
+  h1 {
+    font-family: var(--serif);
+    font-size: clamp(52px, 8vw, 100px);
+    font-weight: 900;
+    line-height: 0.95;
+    letter-spacing: 2px;
+    color: var(--text);
+    margin-bottom: 10px;
+  }
+
+  h1 .glow {
+    color: var(--gold);
+    text-shadow: 0 0 40px rgba(212,168,67,0.4);
+  }
+
+  .hero-persian {
+    font-size: 28px;
+    color: var(--gold2);
+    font-family: serif;
+    letter-spacing: 4px;
+    margin-bottom: 20px;
+    direction: rtl;
+  }
+
+  .hero-sub {
+    font-family: var(--body);
+    font-size: 18px;
+    font-style: italic;
+    color: var(--muted);
+    max-width: 520px;
+    margin-bottom: 36px;
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 44px;
+    flex-wrap: wrap;
+  }
+
+  .stat { display: flex; flex-direction: column; gap: 3px; }
+  .stat-label { font-family: var(--mono); font-size: 8px; letter-spacing: 3px; color: var(--muted); text-transform: uppercase; }
+  .stat-value { font-family: var(--serif); font-size: 20px; color: var(--gold); }
+
+  /* ════════════════════════════════
+     EMBEDDED CONTENT PANEL
+  ════════════════════════════════ */
+  #embedded-panel {
+    margin: 0;
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .embed-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 32px;
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .embed-dot { width: 8px; height: 8px; border-radius: 50%; }
+  .dot-red   { background: #ff5f57; }
+  .dot-yel   { background: #febc2e; }
+  .dot-grn   { background: #28c840; }
+
+  .embed-url {
+    flex: 1;
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--muted);
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 4px 12px;
+    letter-spacing: 0.5px;
+  }
+
+  .embed-tag {
+    font-family: var(--mono);
+    font-size: 8px;
+    letter-spacing: 2px;
+    color: var(--gold);
+    text-transform: uppercase;
+    border: 1px solid rgba(212,168,67,0.3);
+    padding: 3px 8px;
+    border-radius: 2px;
+  }
+
+  #page-content {
+    padding: 56px 72px;
+    max-width: 1000px;
+  }
+
+  /* ════════════════════════════════
+     CONTENT TYPOGRAPHY
+  ════════════════════════════════ */
+  .section-tag {
+    font-family: var(--mono);
+    font-size: 8px;
+    letter-spacing: 4px;
+    color: var(--azure);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  h2 {
+    font-family: var(--serif);
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 22px;
+    line-height: 1.2;
+    letter-spacing: 1px;
+  }
+
+  h3 {
+    font-family: var(--serif);
+    font-size: 20px;
+    color: var(--gold2);
+    margin: 36px 0 12px;
+    letter-spacing: 0.5px;
+  }
+
+  p { color: #c0cade; margin-bottom: 18px; max-width: 700px; }
+
+  .content-section { padding: 48px 0; border-top: 1px solid var(--border); }
+
+  blockquote {
+    border-left: 2px solid var(--gold);
+    padding: 14px 24px;
+    margin: 28px 0;
+    font-style: italic;
+    color: var(--gold2);
+    background: rgba(212,168,67,0.05);
+    font-size: 20px;
+    line-height: 1.7;
+  }
+
+  blockquote .transliteration {
+    display: block;
+    font-size: 13px;
+    font-style: normal;
+    color: var(--muted);
+    font-family: var(--mono);
+    margin-top: 6px;
+  }
+
+  .data-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    margin: 28px 0;
+    border: 1px solid var(--border);
+  }
+
+  .dr-cell {
+    background: var(--card);
+    padding: 18px;
+  }
+
+  .dr-cell .dl { font-family: var(--mono); font-size: 8px; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; margin-bottom: 6px; }
+  .dr-cell .dv { font-family: var(--serif); font-size: 18px; color: var(--gold); }
+
+  .alphabet-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin: 24px 0;
+  }
+
+  .letter-cell {
+    background: var(--card);
+    padding: 14px 10px;
+    text-align: center;
+    transition: background 0.2s;
+    cursor: default;
+  }
+
+  .letter-cell:hover { background: var(--lapis); }
+
+  .letter-cell .persian { font-size: 24px; color: var(--gold2); display: block; direction: rtl; }
+  .letter-cell .latin   { font-family: var(--mono); font-size: 9px; color: var(--muted); margin-top: 4px; display: block; }
+
+  .timeline {
+    padding-left: 24px;
+    border-left: 1px solid var(--border);
+    margin: 24px 0;
+  }
+
+  .tl-item {
+    position: relative;
+    margin-bottom: 24px;
+  }
+
+  .tl-item::before {
+    content: '';
+    position: absolute;
+    left: -29px; top: 7px;
+    width: 8px; height: 8px;
+    background: var(--gold);
+    border-radius: 50%;
+  }
+
+  .tl-yr { font-family: var(--mono); font-size: 10px; letter-spacing: 2px; color: var(--gold); margin-bottom: 3px; }
+  .tl-tx { font-size: 15px; color: #8898b8; margin: 0; }
+
+  /* ════════════════════════════════
+     CONCEPTS SECTION
+  ════════════════════════════════ */
+  #concepts {
+    background: #060810;
+    padding: 72px;
+    border-top: 1px solid var(--border);
+  }
+
+  .concept-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    background: var(--border);
+    margin-top: 36px;
+  }
+
+  .concept-card {
+    background: var(--card);
+    padding: 28px;
+  }
+
+  .concept-card h4 {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--azure);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .concept-card .c-title {
+    font-family: var(--serif);
+    font-size: 18px;
+    color: var(--gold2);
+    margin-bottom: 10px;
+  }
+
+  .concept-card .c-desc {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  .concept-card .c-code {
+    background: #040608;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 12px;
+    font-family: var(--mono);
+    font-size: 10.5px;
+    color: #90b890;
+    margin-top: 12px;
+    line-height: 1.65;
+    white-space: pre;
+    overflow-x: auto;
+  }
+
+  .c-code .kw  { color: #c792ea; }
+  .c-code .str { color: #c3e88d; }
+  .c-code .cm  { color: #3d5060; font-style: italic; }
+  .c-code .fn  { color: #82aaff; }
+  .c-code .val { color: #f78c6c; }
+  .c-code .tag { color: #ff5370; }
+  .c-code .at  { color: #ffcb6b; }
+
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 32px 72px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  footer .ft-left {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 2px;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  footer .ft-right {
+    font-family: var(--mono);
+    font-size: 9px;
+    color: rgba(212,168,67,0.5);
+    letter-spacing: 1px;
+  }
+
+  @media (max-width: 700px) {
+    #hero, #page-content, #concepts, footer { padding: 36px 20px; }
+    .concept-grid { grid-template-columns: 1fr; }
+    .hero-stats { gap: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════
+  AI SUMMARY BAR — Auto-generates on every load
+════════════════════════════════════════════ -->
+<div id="ai-bar">
+  <div class="bar-badge">
+    <div class="ai-icon">✦</div>
+    <div class="ai-label">AI</div>
+  </div>
+
+  <div id="summary-content">
+    <div class="loading-row" id="loading-row">
+      <div class="spinner"></div>
+      <span class="loading-text">Reading page content<span class="loading-dots"></span></span>
+    </div>
+  </div>
+
+  <div class="bar-status" id="bar-status">Auto Summary</div>
+</div>
+
+<!-- ════════════════════════════════════════════
+  HERO
+════════════════════════════════════════════ -->
+<div id="hero">
+  <div class="persian-bg-text">فارسی</div>
+  <div class="eyebrow">Embedded Page — AI Auto Summary Active</div>
+  <h1>PERSIAN<br/><span class="glow">LANGUAGE</span></h1>
+  <div class="hero-persian">زبان فارسی</div>
+  <p class="hero-sub">One of the world's great classical languages — the tongue of Rumi, Hafez, and a civilisation spanning three millennia.</p>
+  <div class="hero-stats">
+    <div class="stat"><span class="stat-label">Native Speakers</span><span class="stat-value">~80 Million</span></div>
+    <div class="stat"><span class="stat-label">Script</span><span class="stat-value">Perso-Arabic</span></div>
+    <div class="stat"><span class="stat-label">Language Family</span><span class="stat-value">Indo-Iranian</span></div>
+    <div class="stat"><span class="stat-label">Official In</span><span class="stat-value">3 Countries</span></div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+  EMBEDDED PAGE PANEL (simulates embedded content)
+════════════════════════════════════════════ -->
+<div id="embedded-panel">
+  <div class="embed-header">
+    <div class="embed-dot dot-red"></div>
+    <div class="embed-dot dot-yel"></div>
+    <div class="embed-dot dot-grn"></div>
+    <div class="embed-url">embedded-content://persian-language/full-article</div>
+    <div class="embed-tag">Live Embed</div>
+  </div>
+
+  <!-- THE CONTENT — this is what the AI reads and summarises -->
+  <div id="page-content">
+
+    <div class="content-section" style="border-top: none;">
+      <span class="section-tag">01 — Origins</span>
+      <h2>What Is the Persian Language?</h2>
+      <p>Persian, known natively as Farsi (فارسی) in Iran, Dari (دری) in Afghanistan, and Tajik (Тоҷикӣ) in Tajikistan, is a member of the Iranian branch of the Indo-European language family. It is one of the world's oldest continuously spoken and written languages, with a documented literary history stretching back over a thousand years and linguistic roots going back three millennia.</p>
+      <p>Modern Persian evolved from Middle Persian (Pahlavi), the language of the Sassanid Empire (224–651 CE), which itself descended from Old Persian, the language of the Achaemenid kings including Cyrus the Great and Darius I. Old Persian inscriptions at Persepolis and Behistun date to the 6th–5th centuries BCE.</p>
+      <p>After the Arab conquest of Persia in the 7th century CE, Persian absorbed a massive influx of Arabic vocabulary — particularly in the domains of religion, science, and philosophy — but retained its grammar, syntax, and structural identity entirely. This gives Modern Persian a unique character: grammatically Iranian, lexically enriched by Arabic, and written in a modified Arabic script called the Perso-Arabic script.</p>
+
+      <div class="data-row">
+        <div class="dr-cell"><div class="dl">Language Family</div><div class="dv">Indo-European</div></div>
+        <div class="dr-cell"><div class="dl">Branch</div><div class="dv">Iranian</div></div>
+        <div class="dr-cell"><div class="dl">Script</div><div class="dv">Perso-Arabic</div></div>
+        <div class="dr-cell"><div class="dl">Word Order</div><div class="dv">Subject-Object-Verb</div></div>
+        <div class="dr-cell"><div class="dl">Total Speakers</div><div class="dv">~110 Million</div></div>
+        <div class="dr-cell"><div class="dl">Official Countries</div><div class="dv">Iran, Afghanistan, Tajikistan</div></div>
+      </div>
+    </div>
+
+    <div class="content-section">
+      <span class="section-tag">02 — Script &amp; Writing</span>
+      <h2>The Persian Script</h2>
+      <p>Persian is written right-to-left using a 32-letter alphabet derived from the Arabic script, with four additional letters added to represent sounds unique to Persian: پ (p), چ (ch), ژ (zh), and گ (g). Unlike Arabic, Persian has no short vowels written in normal text — they are implied by context, much like Hebrew.</p>
+      <p>The script is cursive by nature: letters connect to each other within words, with some letters having different forms depending on whether they appear at the beginning, middle, or end of a word. This gives written Persian a beautiful flowing aesthetic that has been elevated into a major art form — calligraphy — considered one of the highest arts in Iranian culture.</p>
+
+      <h3>Persian Letters (sample)</h3>
+      <div class="alphabet-grid">
+        <div class="letter-cell"><span class="persian">ا</span><span class="latin">alef / a</span></div>
+        <div class="letter-cell"><span class="persian">ب</span><span class="latin">be / b</span></div>
+        <div class="letter-cell"><span class="persian">پ</span><span class="latin">pe / p</span></div>
+        <div class="letter-cell"><span class="persian">ت</span><span class="latin">te / t</span></div>
+        <div class="letter-cell"><span class="persian">ج</span><span class="latin">jim / j</span></div>
+        <div class="letter-cell"><span class="persian">چ</span><span class="latin">che / ch</span></div>
+        <div class="letter-cell"><span class="persian">د</span><span class="latin">dal / d</span></div>
+        <div class="letter-cell"><span class="persian">ر</span><span class="latin">re / r</span></div>
+        <div class="letter-cell"><span class="persian">س</span><span class="latin">sin / s</span></div>
+        <div class="letter-cell"><span class="persian">ش</span><span class="latin">shin / sh</span></div>
+        <div class="letter-cell"><span class="persian">ف</span><span class="latin">fe / f</span></div>
+        <div class="letter-cell"><span class="persian">گ</span><span class="latin">gaf / g</span></div>
+        <div class="letter-cell"><span class="persian">م</span><span class="latin">mim / m</span></div>
+        <div class="letter-cell"><span class="persian">ن</span><span class="latin">nun / n</span></div>
+        <div class="letter-cell"><span class="persian">و</span><span class="latin">vav / v, w</span></div>
+        <div class="letter-cell"><span class="persian">ی</span><span class="latin">ye / y</span></div>
+      </div>
+    </div>
+
+    <div class="content-section">
+      <span class="section-tag">03 — Literature</span>
+      <h2>A Thousand Years of Poetry</h2>
+      <p>Persian literature is dominated by poetry to a degree unmatched in almost any other language. For over a thousand years, the ghazal, the masnavi, the rubaʿi, and the qasida have been the primary vehicles for expressing philosophy, love, grief, mysticism, and beauty. The Persian poet held — and still holds — a position of enormous cultural prestige.</p>
+
+      <blockquote>
+        من کجا بودم عجب کو بود عقلم دوش مست
+        <span class="transliteration">Man kojā budam ajab ku bud aqlam dush mast — "Where was I, how strange — where was my mind last night, drunk" — Rumi</span>
+      </blockquote>
+
+      <h3>The Great Poets</h3>
+      <p>Ferdowsi (940–1020 CE) composed the Shahnameh — the Book of Kings — a 50,000-couplet epic recounting the mythological and historical past of Persia. Written over thirty years, it is the longest poem ever composed by a single poet, and is credited with single-handedly preserving the Persian language from being replaced by Arabic. Iranians revere Ferdowsi as the saviour of their language.</p>
+      <p>Omar Khayyam (1048–1131) was simultaneously a brilliant mathematician, astronomer, and the author of the Rubaiyat — four-line verses of elegant skepticism and sensual philosophy. His verses, translated by Edward FitzGerald in 1859, became a worldwide sensation. Khayyam also reformed the Persian solar calendar, producing a system more accurate than the Gregorian calendar introduced five centuries later.</p>
+      <p>Rumi (Jalal al-Din Muhammad Balkhi, 1207–1273) is arguably the most widely read poet in the world today. Born in Balkh (modern Afghanistan), he settled in Konya (Turkey), where he wrote the six-volume Masnavi — a spiritual epic of 25,000 couplets exploring love, longing, and union with the divine. His Divan-e Shams-e Tabrizi contains over 40,000 verses of ecstatic poetry.</p>
+      <p>Hafez (Khwaja Shams-ud-Din Muhammad Hafez-e Shirazi, 1315–1390) is considered the master of the ghazal and the pinnacle of Persian lyric poetry. His Divan is the most widely-owned book in Iran after the Quran, and is used as an oracle — a practice called Fal-e Hafez, where one opens the book at random to receive guidance.</p>
+
+      <blockquote>
+        عشق آتش است و من خرمن سوخته
+        <span class="transliteration">Eshq atash ast va man kharman sukhte — "Love is fire, and I am a burnt harvest" — Hafez</span>
+      </blockquote>
+    </div>
+
+    <div class="content-section">
+      <span class="section-tag">04 — Influence</span>
+      <h2>Persian's Influence on World Languages</h2>
+      <p>For several centuries during the medieval period, Persian served as the lingua franca of scholarship, diplomacy, and culture across a vast stretch of the Islamic world — from the Ottoman Empire in the west to the Mughal Empire in the east. Thousands of Persian words entered Turkish, Arabic, Urdu, Hindi, Bengali, and even English through trade and conquest.</p>
+      <p>English words of Persian origin include: azure (from lazaward), candy (from qand), chess (from chatrang/shatranj), caravan (kārvan), jasmine (yāsamin), lemon (līmū), orange (nārang), paradise (pairidaēza — meaning "walled garden"), shawl (shāl), scarlet (saqerlāt), spinach (aspanāx), and taffeta (tāfteh). The word "magic" comes from the Old Persian maguš — a Zoroastrian priest.</p>
+      <p>The Mughal Empire in India (1526–1858) used Persian as its official court language. All imperial decrees, poetry, and official correspondence were in Persian. The Taj Mahal's inscriptions are in Persian. This introduced enormous amounts of Persian vocabulary into Hindi and Urdu — creating what linguists call Indo-Persian cultural synthesis.</p>
+    </div>
+
+    <div class="content-section">
+      <span class="section-tag">05 — History of the Language</span>
+      <h2>Three Stages of Persian</h2>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-yr">600–300 BCE — OLD PERSIAN</div>
+          <p class="tl-tx">Spoken in the Achaemenid Empire. Inscribed in cuneiform on rock faces at Behistun and Persepolis. Used by Darius I and Xerxes. Closely related to Avestan — the language of Zoroastrianism's sacred texts.</p>
+        </div>
+        <div class="tl-item">
+          <div class="tl-yr">200 BCE–800 CE — MIDDLE PERSIAN (PAHLAVI)</div>
+          <p class="tl-tx">Language of the Parthian and Sassanid empires. Written in its own script. Rich literary tradition of religious and secular texts. The Bundahishn, Denkard, and Arda Wiraz Namag are major surviving works.</p>
+        </div>
+        <div class="tl-item">
+          <div class="tl-yr">800 CE–PRESENT — NEW PERSIAN</div>
+          <p class="tl-tx">Emerges after the Arab conquest, written in modified Arabic script with Arabic loanwords. Remarkably stable — a speaker of 10th-century Persian can largely read modern texts. The first major New Persian literary work is the Shahnameh (1010 CE).</p>
+        </div>
+        <div class="tl-item">
+          <div class="tl-yr">1979–PRESENT — MODERN STANDARDISATION</div>
+          <p class="tl-tx">After the Islamic Revolution, Iran's Academy of Persian Language and Literature began systematically creating Persian equivalents for Western technical terms to reduce foreign word borrowing. "Telescope" became durbin, "computer" became rāyāneh.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-section">
+      <span class="section-tag">06 — Grammar</span>
+      <h2>Key Grammar Features</h2>
+      <p>Persian grammar is notably simpler than many European languages in some respects. There is no grammatical gender — the same word and pronoun (او, "u") refers to both he and she. Nouns do not decline for case. Adjectives follow nouns and are connected by the ezāfe particle (-e or -ye), creating noun phrases of great elegance: for example, "ketāb-e Rumi" means "the book of Rumi" or "Rumi's book."</p>
+      <p>Verbs are richly conjugated and placed at the end of sentences, giving Persian its Subject-Object-Verb word order. The verb "to be" (budan) has both present and past forms, and Persian uses a unique compound past tense formed by combining the past participle with the present tense of "to be" — a feature it shares with French and German. The subjunctive mood is alive and extensively used in everyday speech, unlike in most modern European languages.</p>
+      <p>Persian distinguishes formal and informal registers extensively. The pronoun shomā (شما) is the formal "you" used with elders, strangers, and in professional settings, while to (تو) is informal. This distinction permeates not just pronouns but verb conjugations, titles, and the entire vocabulary of politeness — a system called ta'arof that is central to Iranian social interaction.</p>
+    </div>
+
+  </div><!-- /page-content -->
+</div><!-- /embedded-panel -->
+
+<!-- ════════════════════════════════════════════
+  CONCEPTS SECTION
+════════════════════════════════════════════ -->
+<section id="concepts">
+  <span class="section-tag">Concepts Implemented</span>
+  <h2>How This Page Was Built</h2>
+
+  <div class="concept-grid">
+
+    <div class="concept-card">
+      <h4>Concept 01</h4>
+      <div class="c-title">Anthropic API + Fetch</div>
+      <p class="c-desc">On every page load, JavaScript reads the page's text content and sends it to Claude (claude-sonnet-4-20250514) via a POST request. Claude returns a JSON array of 5 summary lines, which are injected into the top bar.</p>
+      <div class="c-code"><span class="cm">// Send text to Claude API</span>
+<span class="kw">const</span> res = <span class="kw">await</span> <span class="fn">fetch</span>(<span class="str">"/v1/messages"</span>, {
+  method: <span class="str">"POST"</span>,
+  body: <span class="fn">JSON.stringify</span>({
+    model: <span class="str">"claude-sonnet-4-20250514"</span>,
+    messages: [{ role: <span class="str">"user"</span>,
+      content: pageText }]
+  })
+});</div>
+    </div>
+
+    <div class="concept-card">
+      <h4>Concept 02</h4>
+      <div class="c-title">DOM Text Extraction</div>
+      <p class="c-desc">The page automatically reads the embedded panel's text using JavaScript's DOM API. It extracts only visible text content — no HTML tags — and trims it to a token budget before sending to the AI.</p>
+      <div class="c-code"><span class="cm">// Extract page text from DOM</span>
+<span class="kw">const</span> panel =
+  document.<span class="fn">getElementById</span>(<span class="str">"page-content"</span>);
+
+<span class="cm">// innerText gives only visible text</span>
+<span class="kw">const</span> text = panel.innerText
+  .<span class="fn">replace</span>(/\s+/g, <span class="str">" "</span>)
+  .<span class="fn">trim</span>()
+  .<span class="fn">slice</span>(<span class="val">0</span>, <span class="val">6000</span>);</div>
+    </div>
+
+    <div class="concept-card">
+      <h4>Concept 03</h4>
+      <div class="c-title">CSS @keyframes + animation-delay Staggering</div>
+      <p class="c-desc">Each summary line animates in separately using staggered animation-delay values (0ms, 130ms, 260ms...). Combined with a slideDown on the bar itself, this creates the fast sequential "loading" visual effect.</p>
+      <div class="c-code"><span class="at">@keyframes</span> <span class="fn">lineReveal</span> {
+  <span class="kw">from</span> {
+    opacity: <span class="val">0</span>;
+    transform: translateX(<span class="val">-6px</span>);
+  }
+  <span class="kw">to</span> { opacity: <span class="val">1</span>; transform: none; }
+}
+
+<span class="cm">/* Stagger each line in JS */</span>
+line.style.animationDelay =
+  (index * <span class="val">130</span>) + <span class="str">"ms"</span>;</div>
+    </div>
+
+    <div class="concept-card">
+      <h4>Concept 04</h4>
+      <div class="c-title">Async / Await + Promise</div>
+      <p class="c-desc">The API call is asynchronous — the page doesn't freeze while waiting for Claude to respond. "async/await" syntax makes asynchronous code readable. A loading spinner shows during the wait, then swaps for the result.</p>
+      <div class="c-code"><span class="cm">// async = this function is non-blocking</span>
+<span class="kw">async function</span> <span class="fn">generateSummary</span>() {
+  showLoading();         <span class="cm">// show spinner</span>
+
+  <span class="cm">// await pauses HERE only, not page</span>
+  <span class="kw">const</span> lines = <span class="kw">await</span> <span class="fn">callClaudeAPI</span>(text);
+
+  <span class="fn">renderLines</span>(lines);    <span class="cm">// show results</span>
+}</div>
+    </div>
+
+    <div class="concept-card">
+      <h4>Concept 05</h4>
+      <div class="c-title">JSON Structured Output</div>
+      <p class="c-desc">Claude is prompted to return a strict JSON array of exactly 5 objects, each with a "key" label and "text" value. This makes it trivial to parse and render as styled HTML elements with consistent formatting.</p>
+      <div class="c-code"><span class="cm">// Claude returns this structure:</span>
+[
+  {
+    <span class="str">"key"</span>: <span class="str">"ORIGIN"</span>,
+    <span class="str">"text"</span>: <span class="str">"Persian is an Indo-European..."</span>
+  },
+  {
+    <span class="str">"key"</span>: <span class="str">"SCRIPT"</span>,
+    <span class="str">"text"</span>: <span class="str">"Written right-to-left..."</span>
+  }
+  <span class="cm">// ... 3 more lines</span>
+]</div>
+    </div>
+
+    <div class="concept-card">
+      <h4>Concept 06</h4>
+      <div class="c-title">CSS position: fixed + z-index Layering</div>
+      <p class="c-desc">The summary bar stays pinned to the top of the viewport at all times using position:fixed. z-index:9999 ensures it renders above every other element including images, modals, and the embedded panel header.</p>
+      <div class="c-code"><span class="at">#ai-bar</span> {
+  <span class="cm">/* Pinned to viewport, not document */</span>
+  position: <span class="val">fixed</span>;
+  top: <span class="val">0</span>; left: <span class="val">0</span>; right: <span class="val">0</span>;
+
+  <span class="cm">/* Above everything else */</span>
+  z-index: <span class="val">9999</span>;
+
+  <span class="cm">/* Hidden offscreen initially */</span>
+  transform: translateY(<span class="val">-110%</span>);
+}</div>
+    </div>
+
+    <div class="concept-card">
+      <h4>Concept 07</h4>
+      <div class="c-title">CSS Grid — Responsive Auto-Fill</div>
+      <p class="c-desc">The data cards and alphabet grid both use CSS Grid with repeat(auto-fill, minmax()) — meaning the browser calculates how many columns fit based on available width. No JavaScript needed for responsiveness.</p>
+      <div class="c-code"><span class="at">.alphabet-grid</span> {
+  display: <span class="val">grid</span>;
+
+  <span class="cm">/* Browser picks column count */</span>
+  grid-template-columns:
+    <span class="fn">repeat</span>(auto-fill,
+      <span class="fn">minmax</span>(<span class="val">80px</span>, 1fr));
+
+  gap: <span class="val">1px</span>;
+  <span class="cm">/* 1px gap on colored bg = borders */</span>
+}</div>
+    </div>
+
+    <div class="concept-card">
+      <h4>Concept 08</h4>
+      <div class="c-title">Dynamic DOM Manipulation</div>
+      <p class="c-desc">JavaScript builds the summary HTML dynamically — creating elements, assigning classes, setting animation delays, and appending them to the DOM. This is the core technique that lets any content produce a fresh bar on every load.</p>
+      <div class="c-code"><span class="cm">// Build each line in JavaScript</span>
+lines.<span class="fn">forEach</span>((item, i) => {
+  <span class="kw">const</span> div = document.<span class="fn">createElement</span>(<span class="str">"div"</span>);
+  div.className = <span class="str">"sum-line"</span>;
+  div.innerHTML =
+    <span class="str">`&lt;span class="num"&gt;${i+1}&lt;/span&gt;
+    &lt;span class="key"&gt;${item.key}&lt;/span&gt;
+    ${item.text}`</span>;
+  container.<span class="fn">appendChild</span>(div);
+});</div>
+    </div>
+
+  </div><!-- /concept-grid -->
+</section>
+
+<footer>
+  <div class="ft-left">Persian Language — AI Auto-Summary Page · HTML · CSS · Vanilla JS · Anthropic API</div>
+  <div class="ft-right">Summary generated by Claude on every page open</div>
+</footer>
+
+<!-- ════════════════════════════════════════════
+  JAVASCRIPT — The AI Auto-Summary Engine
+════════════════════════════════════════════ -->
+<script>
+(async function() {
+
+  // ── STEP 1: Show the bar immediately (with loading state)
+  const bar = document.getElementById('ai-bar');
+  const summaryContent = document.getElementById('summary-content');
+  const barStatus = document.getElementById('bar-status');
+
+  // Slide bar down right away
+  bar.classList.add('visible');
+
+  // ── STEP 2: Extract text from the embedded page content
+  function extractPageText() {
+    const panel = document.getElementById('page-content');
+    if (!panel) return 'Persian language page content.';
+    // Get clean text, collapse whitespace, limit to ~6000 chars
+    return panel.innerText
+      .replace(/\s+/g, ' ')
+      .trim()
+      .slice(0, 6000);
+  }
+
+  // ── STEP 3: Call Claude API with the extracted text
+  async function callClaude(pageText) {
+    const systemPrompt = `You are a content summariser. Read the page content and return ONLY a valid JSON array of exactly 5 objects. Each object has "key" (1-2 word uppercase label like "SCRIPT", "ORIGIN", "LITERATURE") and "text" (one concise sentence, max 110 characters). No preamble, no markdown, no backticks. Just the raw JSON array.`;
+
+    const userPrompt = `Summarise this page content into exactly 5 key points:\n\n${pageText}`;
+
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        system: systemPrompt,
+        messages: [{ role: 'user', content: userPrompt }]
+      })
+    });
+
+    if (!response.ok) throw new Error(`API error: ${response.status}`);
+    const data = await response.json();
+    const rawText = data.content[0].text.trim();
+
+    // Parse JSON — strip any accidental markdown fences
+    const clean = rawText.replace(/```json|```/g, '').trim();
+    return JSON.parse(clean);
+  }
+
+  // ── STEP 4: Render the summary lines with staggered animation
+  function renderSummary(lines) {
+    summaryContent.innerHTML = ''; // clear loading spinner
+
+    lines.forEach((item, index) => {
+      const div = document.createElement('div');
+      div.className = 'sum-line';
+      div.style.animationDelay = (index * 130) + 'ms';
+      div.innerHTML = `<span class="num">${index + 1}</span> <span class="key">${item.key}:</span> ${item.text}`;
+      summaryContent.appendChild(div);
+
+      // Trigger animation after append
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => { div.classList.add('show'); });
+      });
+    });
+
+    barStatus.classList.add('show');
+  }
+
+  // ── STEP 5: Show error state if API fails
+  function renderError(msg) {
+    summaryContent.innerHTML = `
+      <div style="font-family:var(--mono);font-size:10px;color:#c45;">
+        ✗ Summary unavailable — ${msg}
+      </div>`;
+  }
+
+  // ── MAIN: Run the pipeline
+  try {
+    const pageText = extractPageText();
+    const summaryLines = await callClaude(pageText);
+    renderSummary(summaryLines);
+  } catch (err) {
+    console.error('Auto-summary error:', err);
+    renderError(err.message);
+  }
+
+})();
+</script>
+
+</body>
+</html>

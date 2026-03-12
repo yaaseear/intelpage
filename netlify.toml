@@ -1,6 +1,7 @@
+
 [build]
-  publish = "mypage"
+  base = "mypage"
+  publish = "."
 
 [functions]
-  directory = "netlify/functions"
-  
+  directory = "../netlify/functions"

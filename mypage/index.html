@@ -1006,8 +1006,11 @@ lines.<span class="fn">forEach</span>((item, i) => {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ text: pageText })
   });
+
   const data = await response.json();
-  return data;
+if (typeof data === 'string') return JSON.parse(data);
+return data;
+  
 }
    
 

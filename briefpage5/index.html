@@ -1,0 +1,1327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iran — Land of Emperors & Poets</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Amiri:wght@400;700&family=Noto+Nastaliq+Urdu:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --deep-navy: #0a0e1a;
+            --midnight: #1a1f2e;
+            --royal-blue: #1e3a5f;
+            --gold: #c9a961;
+            --gold-light: #e8d5a3;
+            --gold-glow: rgba(201, 169, 97, 0.4);
+            --cream: #faf8f5;
+            --text-light: #a0aec0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, var(--deep-navy) 0%, var(--midnight) 50%, var(--royal-blue) 100%);
+            min-height: 100vh;
+            color: var(--cream);
+            overflow-x: hidden;
+        }
+
+        /* AI Summary Bar */
+        #ai-summary-bar {
+            position: fixed;
+            top: -500px;
+            left: 0;
+            right: 0;
+            background: linear-gradient(135deg, #0d47a1 0%, #1565c0 50%, #42a5f5 100%);
+            color: white;
+            z-index: 9999;
+            transition: top 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 10px 40px rgba(13, 71, 161, 0.4);
+            border-bottom: 3px solid var(--gold);
+        }
+
+        #ai-summary-bar.visible {
+            top: 0;
+        }
+
+        .summary-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1.5rem 2rem;
+        }
+
+        .summary-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .summary-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .summary-icon svg {
+            width: 18px;
+            height: 18px;
+            color: white;
+        }
+
+        .summary-label {
+            font-family: 'Cinzel', serif;
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            opacity: 0.9;
+            color: var(--gold-light);
+        }
+
+        .summary-loading {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .loading-dots {
+            display: flex;
+            gap: 4px;
+        }
+
+        .loading-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--gold);
+            border-radius: 50%;
+            animation: pulse 1.4s infinite ease-in-out;
+        }
+
+        .loading-dot:nth-child(1) { animation-delay: -0.32s; }
+        .loading-dot:nth-child(2) { animation-delay: -0.16s; }
+        .loading-dot:nth-child(3) { animation-delay: 0s; }
+
+        @keyframes pulse {
+            0%, 80%, 100% { transform: scale(0.6); opacity: 0.5; }
+            40% { transform: scale(1); opacity: 1; }
+        }
+
+        .summary-content {
+            display: none;
+        }
+
+        .summary-line {
+            opacity: 0;
+            transform: translateX(-10px);
+            animation: lineReveal 0.6s ease forwards;
+            display: flex;
+            gap: 0.75rem;
+            padding: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        @keyframes lineReveal {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .summary-number {
+            width: 24px;
+            height: 24px;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: bold;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .summary-text {
+            flex: 1;
+        }
+
+        .summary-key {
+            font-family: 'Cinzel', serif;
+            font-size: 0.65rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--gold-light);
+            margin-bottom: 0.25rem;
+        }
+
+        .summary-value {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .summary-close {
+            background: none;
+            border: none;
+            color: white;
+            opacity: 0.6;
+            cursor: pointer;
+            padding: 0.5rem;
+            transition: opacity 0.3s;
+        }
+
+        .summary-close:hover {
+            opacity: 1;
+        }
+
+        /* Navigation */
+        nav {
+            background: linear-gradient(135deg, rgba(10, 14, 26, 0.95) 0%, rgba(26, 31, 46, 0.95) 100%);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(201, 169, 97, 0.3);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .logo-persian {
+            font-family: 'Amiri', serif;
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 50%, var(--gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 0 20px rgba(201, 169, 97, 0.5));
+            font-weight: 700;
+        }
+
+        .logo-subtitle {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 0.85rem;
+            color: var(--text-light);
+            font-style: italic;
+            line-height: 1.4;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-link {
+            font-family: 'Cinzel', serif;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--text-light);
+            text-decoration: none;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            padding: 0.5rem 0;
+            position: relative;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--gold), var(--gold-light));
+            transition: width 0.4s ease;
+            box-shadow: 0 0 10px var(--gold-glow);
+        }
+
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--gold);
+            text-shadow: 0 0 20px rgba(201, 169, 97, 0.5);
+        }
+
+        /* Hero Section */
+        .hero {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 5rem 2rem 3rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, rgba(201, 169, 97, 0.2), rgba(232, 213, 163, 0.1));
+            color: var(--gold);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-family: 'Cinzel', serif;
+            font-size: 0.65rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(201, 169, 97, 0.3);
+            box-shadow: 0 0 30px rgba(201, 169, 97, 0.2);
+        }
+
+        .hero-title {
+            font-family: 'Cinzel', serif;
+            font-size: 5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 50%, var(--gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+            letter-spacing: 12px;
+            filter: drop-shadow(0 0 40px rgba(201, 169, 97, 0.4));
+        }
+
+        .hero-subtitle {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem;
+            font-style: italic;
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+            font-weight: 300;
+            letter-spacing: 8px;
+        }
+
+        /* Persian Calligraphy - Glass Effect */
+        .persian-calligraphy {
+            font-family: 'Amiri', serif;
+            font-size: 6rem;
+            background: linear-gradient(135deg, rgba(201, 169, 97, 0.3) 0%, rgba(232, 213, 163, 0.8) 50%, rgba(201, 169, 97, 0.3) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 0 30px rgba(201, 169, 97, 0.6)) drop-shadow(0 0 60px rgba(201, 169, 97, 0.3));
+            font-weight: 700;
+            margin: 2rem 0;
+            position: relative;
+            display: inline-block;
+            animation: persianGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes persianGlow {
+            0%, 100% {
+                filter: drop-shadow(0 0 30px rgba(201, 169, 97, 0.6)) drop-shadow(0 0 60px rgba(201, 169, 97, 0.3));
+            }
+            50% {
+                filter: drop-shadow(0 0 50px rgba(201, 169, 97, 0.8)) drop-shadow(0 0 80px rgba(201, 169, 97, 0.5));
+            }
+        }
+
+        .persian-calligraphy::before {
+            content: 'ایران';
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.3) 50%, rgba(255, 255, 255, 0.1) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: blur(20px);
+            z-index: -1;
+        }
+
+        .hero-description {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.3rem;
+            color: var(--text-light);
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            line-height: 1.9;
+        }
+
+        /* Flag with Glass Effect */
+        .flag-container {
+            width: 140px;
+            height: 90px;
+            margin: 2rem auto;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(201, 169, 97, 0.3);
+            position: relative;
+        }
+
+        .flag-container::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.3) 0%, transparent 50%, rgba(255, 255, 255, 0.1) 100%);
+            pointer-events: none;
+            border-radius: 10px;
+        }
+
+        .flag {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .flag-green { flex: 1; background: linear-gradient(90deg, #239f40, #38b44a); }
+        .flag-white { flex: 1; background: linear-gradient(90deg, #ffffff, #f0f0f0); display: flex; align-items: center; justify-content: center; }
+        .flag-emblem { width: 35px; height: 35px; background: linear-gradient(135deg, #da0000, #ff1a1a); border-radius: 50%; box-shadow: 0 0 10px rgba(218, 0, 0, 0.5); }
+        .flag-red { flex: 1; background: linear-gradient(90deg, #da0000, #ff1a1a); }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            max-width: 1000px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(201, 169, 97, 0.2);
+            transition: all 0.4s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3), 0 0 30px rgba(201, 169, 97, 0.2);
+            border-color: rgba(201, 169, 97, 0.5);
+        }
+
+        .stat-label {
+            font-family: 'Cinzel', serif;
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--text-light);
+            margin-bottom: 0.75rem;
+        }
+
+        .stat-value {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.6rem;
+            font-weight: 600;
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Page Content */
+        .page-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: none;
+        }
+
+        .page-content.active {
+            display: block;
+            animation: fadeIn 0.6s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .content-section {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 3rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(201, 169, 97, 0.15);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid rgba(201, 169, 97, 0.3);
+        }
+
+        .section-number {
+            font-family: 'Cinzel', serif;
+            font-size: 0.85rem;
+            color: var(--gold);
+            letter-spacing: 2px;
+        }
+
+        .section-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.2rem;
+            font-weight: 600;
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .content-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.15rem;
+            line-height: 2;
+            color: var(--text-light);
+            text-align: justify;
+        }
+
+        .content-text p {
+            margin-bottom: 1.5rem;
+        }
+
+        .drop-cap::first-letter {
+            float: left;
+            font-size: 4.5rem;
+            line-height: 0.8;
+            padding-right: 0.75rem;
+            padding-top: 0.25rem;
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 3rem;
+            margin-top: 2rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--gold), var(--gold-light));
+            box-shadow: 0 0 10px rgba(201, 169, 97, 0.5);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2rem;
+            padding-left: 2rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -3rem;
+            top: 0.5rem;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--gold);
+            border: 3px solid var(--deep-navy);
+            box-shadow: 0 0 15px rgba(201, 169, 97, 0.6);
+        }
+
+        .timeline-year {
+            font-family: 'Cinzel', serif;
+            font-size: 0.85rem;
+            color: var(--gold);
+            letter-spacing: 2px;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.05rem;
+            color: var(--text-light);
+            line-height: 1.8;
+        }
+
+        /* Language Cards */
+        .languages-section {
+            background: linear-gradient(135deg, rgba(13, 71, 161, 0.3) 0%, rgba(21, 101, 192, 0.2) 100%);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 3rem;
+            margin: 2rem 0;
+            border: 1px solid rgba(201, 169, 97, 0.2);
+        }
+
+        .languages-title {
+            font-family: 'Cinzel', serif;
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 2.5rem;
+            letter-spacing: 6px;
+            background: linear-gradient(135deg, var(--cream) 0%, var(--gold) 50%, var(--cream) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .languages-title span {
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .language-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 1.25rem;
+        }
+
+        .language-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(201, 169, 97, 0.2);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.4s ease;
+        }
+
+        .language-card:hover,
+        .language-card.active {
+            background: linear-gradient(135deg, rgba(201, 169, 97, 0.15) 0%, rgba(232, 213, 163, 0.1) 100%);
+            border-color: var(--gold);
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(201, 169, 97, 0.3), 0 0 30px rgba(201, 169, 97, 0.2);
+        }
+
+        .language-native {
+            font-family: 'Amiri', serif;
+            font-size: 2rem;
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+            filter: drop-shadow(0 0 10px rgba(201, 169, 97, 0.4));
+        }
+
+        .language-name {
+            font-family: 'Cinzel', serif;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            color: var(--cream);
+            margin-bottom: 0.5rem;
+        }
+
+        .language-status {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-light);
+        }
+
+        .language-card.active .language-status {
+            color: var(--gold);
+            font-weight: 600;
+        }
+
+        /* Quote Box */
+        .quote-box {
+            background: linear-gradient(135deg, rgba(201, 169, 97, 0.1) 0%, rgba(232, 213, 163, 0.05) 100%);
+            border-left: 4px solid var(--gold);
+            padding: 2rem;
+            margin: 2rem 0;
+            border-radius: 0 15px 15px 0;
+        }
+
+        .quote-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.3rem;
+            font-style: italic;
+            color: var(--gold-light);
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .quote-author {
+            font-family: 'Cinzel', serif;
+            font-size: 0.85rem;
+            color: var(--gold);
+            letter-spacing: 2px;
+        }
+
+        /* Persian Text Display */
+        .persian-text-display {
+            font-family: 'Amiri', serif;
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, rgba(201, 169, 97, 0.4) 0%, rgba(232, 213, 163, 0.9) 50%, rgba(201, 169, 97, 0.4) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 0 20px rgba(201, 169, 97, 0.5));
+            text-align: center;
+            margin: 2rem 0;
+            line-height: 2;
+        }
+
+        /* Scroll Progress */
+        #scroll-progress {
+            position: fixed;
+            top: 120px;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--gold), var(--gold-light));
+            z-index: 9998;
+            width: 0%;
+            transition: width 0.1s ease;
+            box-shadow: 0 0 15px rgba(201, 169, 97, 0.6);
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, rgba(13, 71, 161, 0.5) 0%, rgba(21, 101, 192, 0.3) 100%);
+            backdrop-filter: blur(10px);
+            color: var(--cream);
+            padding: 3rem 2rem;
+            margin-top: 4rem;
+            border-top: 2px solid rgba(201, 169, 97, 0.3);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .footer-logo {
+            font-family: 'Amiri', serif;
+            font-size: 2rem;
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+            filter: drop-shadow(0 0 20px rgba(201, 169, 97, 0.5));
+        }
+
+        .footer-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1rem;
+            color: var(--text-light);
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-persian {
+            font-family: 'Amiri', serif;
+            font-size: 1.5rem;
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-top: 2rem;
+            filter: drop-shadow(0 0 15px rgba(201, 169, 97, 0.4));
+        }
+
+        /* AI Badge */
+        .ai-badge {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            color: var(--deep-navy);
+            padding: 0.875rem 1.5rem;
+            border-radius: 50px;
+            font-family: 'Cinzel', serif;
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            box-shadow: 0 8px 30px rgba(201, 169, 97, 0.4), 0 0 20px rgba(201, 169, 97, 0.3);
+            z-index: 999;
+            animation: float 3s ease-in-out infinite;
+            font-weight: 600;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero-title {
+                font-size: 3rem;
+                letter-spacing: 6px;
+            }
+
+            .hero-subtitle {
+                font-size: 1.3rem;
+                letter-spacing: 4px;
+            }
+
+            .persian-calligraphy {
+                font-size: 4rem;
+            }
+
+            .content-section {
+                padding: 2rem;
+            }
+
+            .section-title {
+                font-size: 1.75rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .languages-title {
+                font-size: 2rem;
+            }
+        }
+
+        /* Background Pattern */
+        .bg-pattern {
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c9a961' fill-opacity='0.03'%3E%3Cpath d='M40 0l5 10h10l-5 10 5 10h-10l-5 10-5-10H25l5-10-5-10h10L40 0zm0 40l5 10h10l-5 10 5 10h-10l-5 10-5-10H25l5-10-5-10h10L40 40z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: -1;
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Pattern -->
+    <div class="bg-pattern"></div>
+
+    <!-- AI Summary Bar -->
+    <div id="ai-summary-bar">
+        <div class="summary-container">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                <div style="flex: 1;">
+                    <div class="summary-header">
+                        <div class="summary-icon">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                            </svg>
+                        </div>
+                        <span class="summary-label">AI Auto-Summary</span>
+                    </div>
+                    <div id="summary-loading" class="summary-loading">
+                        <div class="loading-dots">
+                            <div class="loading-dot"></div>
+                            <div class="loading-dot"></div>
+                            <div class="loading-dot"></div>
+                        </div>
+                        <span style="font-family: 'Cormorant Garamond', serif; font-size: 0.9rem; font-style: italic; opacity: 0.9;">Reading page content...</span>
+                    </div>
+                    <div id="summary-content" class="summary-content"></div>
+                </div>
+                <button onclick="closeSummary()" class="summary-close">
+                    <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scroll Progress -->
+    <div id="scroll-progress"></div>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">
+                <span class="logo-persian">ایران</span>
+                <div>
+                    <div class="logo-subtitle">The Islamic Republic of Iran</div>
+                    <div class="logo-subtitle">Land of Emperors & Poets</div>
+                </div>
+            </div>
+            <ul class="nav-links">
+                <li><a class="nav-link active" data-page="home">Home</a></li>
+                <li><a class="nav-link" data-page="geography">Geography</a></li>
+                <li><a class="nav-link" data-page="history">History</a></li>
+                <li><a class="nav-link" data-page="culture">Culture</a></li>
+                <li><a class="nav-link" data-page="economy">Economy</a></li>
+                <li><a class="nav-link" data-page="languages">Languages</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="page-home">
+        <div class="hero-badge">✦ AI Auto-Summary Active</div>
+        <h1 class="hero-title">IRAN</h1>
+        <h2 class="hero-subtitle">Land of Emperors & Poets</h2>
+        
+        <!-- Persian Calligraphy with Glass Effect -->
+        <div class="persian-calligraphy">ایران</div>
+        
+        <p class="hero-description">
+            Land of emperors, poets, and ancient fire — the cradle of one of humanity's great civilisations, 
+            spanning seven thousand years of unbroken history.
+        </p>
+
+        <div class="flag-container">
+            <div class="flag">
+                <div class="flag-green"></div>
+                <div class="flag-white">
+                    <div class="flag-emblem"></div>
+                </div>
+                <div class="flag-red"></div>
+            </div>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-label">Capital</div>
+                <div class="stat-value">Tehran</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Population</div>
+                <div class="stat-value">89.1 Million</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Area</div>
+                <div class="stat-value">1,648,195 km²</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Currency</div>
+                <div class="stat-value">Iranian Rial</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Geography Page -->
+    <div class="page-content" id="page-geography">
+        <div class="content-section">
+            <div class="section-header">
+                <span class="section-number">01</span>
+                <h2 class="section-title">The Land and Its Landscape</h2>
+            </div>
+            <div class="content-text">
+                <p class="drop-cap">
+                    Iran is a vast country in West Asia, sharing borders with Iraq to the west, Turkey and Armenia to the northwest, 
+                    Azerbaijan and Turkmenistan to the north, Afghanistan and Pakistan to the east, and the Persian Gulf and Gulf of 
+                    Oman to the south. Its total land area of approximately 1.648 million square kilometres makes it the 17th-largest 
+                    country in the world.
+                </p>
+                <p>
+                    The country's terrain is dominated by the Iranian Plateau, one of the great plateaux of Asia. Two major mountain 
+                    chains frame this interior plateau: the Alborz range in the north and the Zagros range running northwest to southeast. 
+                    The Alborz reaches its pinnacle at Mount Damavand — at 5,610 metres, the highest peak in the Middle East and the 
+                    highest volcano in Asia.
+                </p>
+                <p>
+                    To the east and southeast, the plateau descends into two great salt deserts: the Dasht-e Kavir and the Dasht-e Lut. 
+                    The latter holds the record for the highest surface temperature ever recorded on Earth. Along the northern edge, 
+                    the Caspian Sea coast features lush subtropical forests, while the southern coast along the Persian Gulf experiences 
+                    extreme heat and humidity.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- History Page -->
+    <div class="page-content" id="page-history">
+        <div class="content-section">
+            <div class="section-header">
+                <span class="section-number">02</span>
+                <h2 class="section-title">Seven Millennia of History</h2>
+            </div>
+            <div class="content-text">
+                <p class="drop-cap">
+                    Iran's history stretches back over 7,000 years, making it one of the world's oldest continuous civilisations. 
+                    The Elamite civilisation emerged around 3200 BCE in what is now southwestern Iran, contemporary with ancient 
+                    Sumer in Mesopotamia.
+                </p>
+                <p>
+                    The Achaemenid Empire (550–330 BCE), founded by Cyrus the Great, became the largest empire the world had yet seen, 
+                    stretching from the Balkans to the Indus Valley. Cyrus is remembered for his Cylinder of Human Rights, often 
+                    considered the first charter of human rights. The empire's capital, Persepolis, remains one of archaeology's 
+                    most magnificent sites.
+                </p>
+                <p>
+                    After Alexander's conquest, the Parthian and Sassanid empires restored Iranian rule. The Sassanid period 
+                    (224–651 CE) marked a golden age of Persian art, architecture, and Zoroastrianism. The Arab Muslim conquest 
+                    in 651 CE brought Islam to Persia, beginning a new chapter in Iranian history.
+                </p>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-year">247 BCE</div>
+                    <div class="timeline-text">Parthian Empire rises, reviving Iranian rule for nearly 500 years.</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">224 CE</div>
+                    <div class="timeline-text">Sassanid Empire founded — a golden age of Persian art, architecture and Zoroastrianism.</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">651 CE</div>
+                    <div class="timeline-text">Arab Muslim conquest ends the Sassanid Empire; Islam spreads across Persia.</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">1501</div>
+                    <div class="timeline-text">Safavid dynasty unifies Iran and establishes Twelver Shia Islam as state religion.</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">1979</div>
+                    <div class="timeline-text">The Islamic Revolution; Ayatollah Khomeini establishes the Islamic Republic of Iran.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Culture Page -->
+    <div class="page-content" id="page-culture">
+        <div class="content-section">
+            <div class="section-header">
+                <span class="section-number">03</span>
+                <h2 class="section-title">Culture & Civilisation</h2>
+            </div>
+            <div class="content-text">
+                <p class="drop-cap">
+                    Persian culture represents one of humanity's richest artistic and intellectual traditions. The Persian language 
+                    has produced some of the world's greatest poetry, with figures like Rumi, Hafez, Ferdowsi, and Omar Khayyam 
+                    achieving universal recognition.
+                </p>
+                
+                <div class="quote-box">
+                    <p class="quote-text">"Love is fire, and I am a burnt harvest"</p>
+                    <p class="quote-author">— Hafez</p>
+                </div>
+                
+                <p>
+                    Persian miniature painting, calligraphy, carpet weaving, and architecture are celebrated worldwide. The intricate 
+                    geometric patterns of Islamic art found their most sophisticated expression in Persian mosques and palaces. 
+                    The Shah Mosque in Isfahan and the Nasir al-Mulk Mosque in Shiraz exemplify this architectural magnificence.
+                </p>
+                <p>
+                    Nowruz, the Persian New Year, is celebrated on the spring equinox and has been observed for over 3,000 years. 
+                    It is recognised by UNESCO as an Intangible Cultural Heritage of Humanity. The celebration reflects Iran's 
+                    Zoroastrian heritage and the importance of renewal and rebirth in Persian culture.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Economy Page -->
+    <div class="page-content" id="page-economy">
+        <div class="content-section">
+            <div class="section-header">
+                <span class="section-number">04</span>
+                <h2 class="section-title">Economy & Resources</h2>
+            </div>
+            <div class="content-text">
+                <p class="drop-cap">
+                    Iran possesses the world's fourth-largest proven oil reserves and second-largest natural gas reserves. 
+                    The petroleum industry dominates the economy, accounting for a significant portion of government revenue 
+                    and export earnings.
+                </p>
+                <p>
+                    Beyond hydrocarbons, Iran has substantial mineral resources including copper, iron ore, zinc, and gold. 
+                    The agricultural sector employs about 18% of the workforce, producing pistachios, saffron, dates, and caviar 
+                    — Iran is the world's largest producer of saffron and pistachios.
+                </p>
+                <p>
+                    Despite international sanctions, Iran has developed a diversified industrial base including automotive 
+                    manufacturing, petrochemicals, steel production, and pharmaceuticals. The country has a large educated 
+                    workforce and significant scientific capabilities.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Languages Page -->
+    <div class="page-content" id="page-languages">
+        <div class="languages-section">
+            <h2 class="languages-title">Explore by <span>Language</span></h2>
+            
+            <!-- Persian Calligraphy Display -->
+            <div class="persian-text-display">زبان فارسی</div>
+            
+            <div class="language-grid">
+                <div class="language-card active" onclick="loadLanguagePage('persian', this)">
+                    <div class="language-native">فارسی</div>
+                    <div class="language-name">PERSIAN</div>
+                    <div class="language-status">● Active</div>
+                </div>
+                <div class="language-card" onclick="loadLanguagePage('arabic', this)">
+                    <div class="language-native">عربی</div>
+                    <div class="language-name">ARABIC</div>
+                    <div class="language-status">Coming Soon</div>
+                </div>
+                <div class="language-card" onclick="loadLanguagePage('urdu', this)">
+                    <div class="language-native">اردو</div>
+                    <div class="language-name">URDU</div>
+                    <div class="language-status">Coming Soon</div>
+                </div>
+                <div class="language-card" onclick="loadLanguagePage('russian', this)">
+                    <div class="language-native">русский</div>
+                    <div class="language-name">RUSSIAN</div>
+                    <div class="language-status">Coming Soon</div>
+                </div>
+                <div class="language-card" onclick="loadLanguagePage('hindi', this)">
+                    <div class="language-native">हिन्दी</div>
+                    <div class="language-name">HINDI</div>
+                    <div class="language-status">Coming Soon</div>
+                </div>
+                <div class="language-card" onclick="loadLanguagePage('turkish', this)">
+                    <div class="language-native">Türkçe</div>
+                    <div class="language-name">TURKISH</div>
+                    <div class="language-status">Coming Soon</div>
+                </div>
+                <div class="language-card" onclick="loadLanguagePage('german', this)">
+                    <div class="language-native">Deutsch</div>
+                    <div class="language-name">GERMAN</div>
+                    <div class="language-status">Coming Soon</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section" id="language-content">
+            <div class="section-header">
+                <span class="section-number">05</span>
+                <h2 class="section-title">Persian Language</h2>
+            </div>
+            <div class="content-text">
+                <p class="drop-cap">
+                    Persian, known natively as Farsi (فارسی) in Iran, Dari (دری) in Afghanistan, and Tajik (Тоҷикӣ) in Tajikistan, 
+                    is a member of the Iranian branch of the Indo-European language family. It is one of the world's oldest 
+                    continuously spoken and written languages, with a documented literary history stretching back over a 
+                    thousand years.
+                </p>
+                <p>
+                    Persian is written right-to-left using a 32-letter alphabet derived from the Arabic script, with four 
+                    additional letters added to represent sounds unique to Persian: پ (p), چ (ch), ژ (zh), and گ (g). The 
+                    script is cursive by nature, giving written Persian a beautiful flowing aesthetic that has been elevated 
+                    into the major art form of calligraphy.
+                </p>
+                <p>
+                    Persian literature is dominated by poetry to a degree unmatched in almost any other language. For over 
+                    a thousand years, the ghazal, the masnavi, the rubaʿi, and the qasida have been the primary vehicles for 
+                    expressing philosophy, love, grief, mysticism, and beauty.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- AI Badge -->
+    <div class="ai-badge">✦ AI Summary Active</div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">ایران</div>
+            <p class="footer-text">© 2024 Iran InfoHub. Built with HTML, CSS, JavaScript & AI Auto-Summary Technology.</p>
+            <p class="footer-text">Land of Emperors, Poets, and Ancient Fire</p>
+            <p class="footer-persian">سرزمین پادشاهان و شاعران</p>
+        </div>
+    </footer>
+
+    <script>
+        // Page Summaries
+        const pageSummaries = {
+            home: [
+                { key: "Introduction", text: "Iran is the cradle of one of humanity's greatest civilisations, spanning 7,000 years of continuous history." },
+                { key: "Geography", text: "Located in West Asia with 1.648 million km², featuring the Iranian Plateau, Alborz and Zagros mountains." },
+                { key: "Population", text: "89.1 million people with Tehran as the capital, using the Iranian Rial as currency." },
+                { key: "Heritage", text: "Home to ancient empires including Achaemenid, Parthian, and Sassanid, with rich cultural traditions." },
+                { key: "Modern Iran", text: "Today's Islamic Republic combines ancient heritage with modern development and scientific advancement." }
+            ],
+            geography: [
+                { key: "Location", text: "Iran borders Iraq, Turkey, Armenia, Azerbaijan, Turkmenistan, Afghanistan, Pakistan, with Persian Gulf to south." },
+                { key: "Terrain", text: "Dominated by Iranian Plateau, framed by Alborz range (north) and Zagros range (northwest to southeast)." },
+                { key: "Peaks", text: "Mount Damavand at 5,610 metres is the highest peak in Middle East and highest volcano in Asia." },
+                { key: "Deserts", text: "Dasht-e Kavir and Dasht-e Lut salt deserts in east; Lut holds record for highest surface temperature on Earth." },
+                { key: "Climate", text: "Diverse climates from Caspian subtropical forests to Persian Gulf extreme heat and humidity." }
+            ],
+            history: [
+                { key: "Ancient", text: "7,000+ year history beginning with Elamite civilisation around 3200 BCE, contemporary with ancient Sumer." },
+                { key: "Achaemenid", text: "Cyrus the Great founded empire (550-330 BCE), largest the world had seen, with Cylinder of Human Rights." },
+                { key: "Islamic Era", text: "Arab conquest 651 CE brought Islam; Safavid dynasty 1501 established Twelver Shia Islam as state religion." },
+                { key: "Modern", text: "1979 Islamic Revolution established current Islamic Republic under Ayatollah Khomeini." },
+                { key: "Legacy", text: "Persepolis remains one of archaeology's most magnificent sites from ancient Persian civilisation." }
+            ],
+            culture: [
+                { key: "Poetry", text: "Persian literature produced world's greatest poets: Rumi, Hafez, Ferdowsi, Omar Khayyam with universal recognition." },
+                { key: "Arts", text: "Persian miniature painting, calligraphy, carpet weaving, and architecture celebrated worldwide for sophistication." },
+                { key: "Architecture", text: "Shah Mosque in Isfahan and Nasir al-Mulk Mosque in Shiraz exemplify Islamic architectural magnificence." },
+                { key: "Nowruz", text: "Persian New Year on spring equinox, celebrated 3,000+ years, UNESCO Intangible Cultural Heritage." },
+                { key: "Heritage", text: "Culture reflects Zoroastrian heritage with emphasis on renewal, rebirth, and artistic expression." }
+            ],
+            economy: [
+                { key: "Oil & Gas", text: "4th-largest proven oil reserves, 2nd-largest natural gas reserves; petroleum dominates economy." },
+                { key: "Minerals", text: "Substantial copper, iron ore, zinc, and gold resources beyond hydrocarbons." },
+                { key: "Agriculture", text: "18% of workforce; world's largest producer of saffron and pistachios, plus dates and caviar." },
+                { key: "Industry", text: "Diversified base including automotive, petrochemicals, steel, pharmaceuticals despite sanctions." },
+                { key: "Technology", text: "Large educated workforce with capabilities in nanotechnology and biotechnology." }
+            ],
+            persian: [
+                { key: "Language", text: "Farsi (Iran), Dari (Afghanistan), Tajik (Tajikistan) — Indo-European family, 1,000+ years literary history." },
+                { key: "Script", text: "32-letter Perso-Arabic alphabet, right-to-left, cursive with 4 unique letters: پ چ ژ گ" },
+                { key: "Literature", text: "Poetry-dominated: ghazal, masnavi, rubaʿi, qasida express philosophy, love, mysticism, beauty." },
+                { key: "Calligraphy", text: "Beautiful flowing script elevated to major art form, one of highest arts in Iranian culture." },
+                { key: "Influence", text: "Persian served as lingua franca across Islamic world; influenced Turkish, Arabic, Urdu, Hindi, English." }
+            ]
+        };
+
+        let currentPage = 'home';
+
+        // Load Page Function
+        function loadPage(pageName) {
+            // Hide all pages
+            document.querySelectorAll('.page-content, .hero').forEach(page => {
+                page.classList.remove('active');
+                page.style.display = 'none';
+            });
+
+            // Show selected page
+            const selectedPage = document.getElementById('page-' + pageName);
+            if (selectedPage) {
+                selectedPage.style.display = 'block';
+                setTimeout(function() {
+                    selectedPage.classList.add('active');
+                }, 10);
+            }
+
+            // Update navigation
+            document.querySelectorAll('.nav-link').forEach(function(link) {
+                link.classList.remove('active');
+                if (link.getAttribute('data-page') === pageName) {
+                    link.classList.add('active');
+                }
+            });
+
+            currentPage = pageName;
+
+            // Trigger summary generation
+            generateSummary(pageName);
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Load Language Page
+        function loadLanguagePage(lang, element) {
+            // Update language cards
+            document.querySelectorAll('.language-card').forEach(function(card) {
+                card.classList.remove('active');
+            });
+            element.classList.add('active');
+
+            // Load specific language content
+            if (pageSummaries[lang]) {
+                generateSummary(lang);
+            } else {
+                // Show coming soon message
+                var contentDiv = document.getElementById('language-content');
+                contentDiv.innerHTML = '<div class="section-header"><span class="section-number">05</span><h2 class="section-title">Coming Soon</h2></div><div class="content-text"><p class="drop-cap">This language section is currently under development. We are working hard to bring you comprehensive content in ' + lang.charAt(0).toUpperCase() + lang.slice(1) + '. Please check back soon for updates.</p><p>Our AI Auto-Summary feature will be active on this page once content is available, providing instant summaries of all information just like our other pages.</p></div>';
+                generateSummary('coming-soon');
+            }
+        }
+
+        // Generate Summary
+        function generateSummary(pageName) {
+            var summaryBar = document.getElementById('ai-summary-bar');
+            var summaryLoading = document.getElementById('summary-loading');
+            var summaryContent = document.getElementById('summary-content');
+
+            // Reset state
+            summaryBar.classList.remove('visible');
+            summaryContent.style.display = 'none';
+            summaryLoading.style.display = 'flex';
+            summaryContent.innerHTML = '';
+
+            // Show summary bar after short delay
+            setTimeout(function() {
+                summaryBar.classList.add('visible');
+
+                // Hide loading, show content after animation
+                setTimeout(function() {
+                    summaryLoading.style.display = 'none';
+                    summaryContent.style.display = 'block';
+
+                    // Get summaries
+                    var summaries = pageSummaries[pageName] || pageSummaries.home;
+
+                    // Render each line with staggered animation
+                    summaries.forEach(function(item, index) {
+                        var line = document.createElement('div');
+                        line.className = 'summary-line';
+                        line.style.animationDelay = (index * 130) + 'ms';
+                        line.innerHTML = '<div class="summary-number">' + (index + 1) + '</div><div class="summary-text"><div class="summary-key">' + item.key + '</div><div class="summary-value">' + item.text + '</div></div>';
+                        summaryContent.appendChild(line);
+                    });
+                }, 800);
+            }, 300);
+        }
+
+        // Close Summary
+        function closeSummary() {
+            document.getElementById('ai-summary-bar').classList.remove('visible');
+        }
+
+        // Scroll Progress
+        window.addEventListener('scroll', function() {
+            var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            var scrolled = (winScroll / height) * 100;
+            document.getElementById('scroll-progress').style.width = scrolled + '%';
+        });
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            generateSummary('home');
+        });
+
+        // Add click handlers to nav links
+        document.querySelectorAll('.nav-link').forEach(function(link) {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                loadPage(this.getAttribute('data-page'));
+            });
+        });
+    </script>
+</body>
+</html>
+

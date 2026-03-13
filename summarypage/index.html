@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>IRAN — The Complete Showcase</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=IBM+Plex+Mono:wght@300;400;600&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --surface: #111111;
+    --card: #181818;
+    --gold: #c9a84c;
+    --gold2: #f0d080;
+    --red: #b03a2e;
+    --green: #2e7d32;
+    --text: #e8e0d0;
+    --muted: #888880;
+    --border: #2a2a2a;
+    --mono: 'IBM Plex Mono', monospace;
+    --serif: 'Playfair Display', serif;
+    --body: 'Lora', serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--body);
+    font-size: 17px;
+    line-height: 1.8;
+    overflow-x: hidden;
+  }
+
+  /* ── SUMMARY BAR ──────────────────────────────── */
+  #summary-bar {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    background: linear-gradient(90deg, #1a0a00 0%, #0d1a00 50%, #00101a 100%);
+    border-bottom: 1px solid var(--gold);
+    padding: 10px 32px;
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    transform: translateY(-100%);
+    animation: slideDown 0.4s cubic-bezier(.22,.68,0,1.2) 0.1s forwards;
+    box-shadow: 0 4px 40px rgba(201,168,76,0.15);
+  }
+
+  @keyframes slideDown {
+    to { transform: translateY(0); }
+  }
+
+  #summary-bar .tag {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 3px;
+    color: var(--gold);
+    text-transform: uppercase;
+    white-space: nowrap;
+    padding-top: 2px;
+    opacity: 0;
+    animation: fadeIn 0.3s ease 0.5s forwards;
+  }
+
+  #summary-lines {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .sum-line {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text);
+    opacity: 0;
+    transform: translateX(-8px);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .sum-line span { color: var(--gold2); }
+
+  .sum-line:nth-child(1) { animation: lineIn 0.25s ease 0.55s forwards; }
+  .sum-line:nth-child(2) { animation: lineIn 0.25s ease 0.68s forwards; }
+  .sum-line:nth-child(3) { animation: lineIn 0.25s ease 0.81s forwards; }
+  .sum-line:nth-child(4) { animation: lineIn 0.25s ease 0.94s forwards; }
+  .sum-line:nth-child(5) { animation: lineIn 0.25s ease 1.07s forwards; }
+
+  @keyframes lineIn {
+    to { opacity: 1; transform: translateX(0); }
+  }
+  @keyframes fadeIn {
+    to { opacity: 1; }
+  }
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
+  /* ── HERO ──────────────────────────────────────── */
+  #hero {
+    margin-top: 70px;
+    min-height: 92vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 60px 72px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  #hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 55% at 70% 40%, rgba(176,58,46,0.18) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 60% at 20% 70%, rgba(46,125,50,0.12) 0%, transparent 55%),
+      radial-gradient(ellipse 80% 80% at 50% 50%, rgba(201,168,76,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-flag {
+    position: absolute;
+    top: 48px; right: 72px;
+    display: flex;
+    flex-direction: column;
+    width: 120px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+    opacity: 0;
+    animation: fadeIn 0.8s ease 1.2s forwards;
+  }
+
+  .hero-flag .stripe { height: 28px; }
+  .hero-flag .s-green  { background: #2e7d32; }
+  .hero-flag .s-white  { background: #e8e0d0; display:flex;align-items:center;justify-content:center; }
+  .hero-flag .s-red    { background: #b03a2e; }
+  .flag-emblem { font-size: 16px; }
+
+  .hero-eyebrow {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 5px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    opacity: 0;
+    animation: fadeIn 0.6s ease 0.3s forwards;
+  }
+
+  .hero-title {
+    font-family: var(--serif);
+    font-size: clamp(64px, 10vw, 128px);
+    font-weight: 900;
+    line-height: 0.9;
+    letter-spacing: -2px;
+    color: var(--text);
+    opacity: 0;
+    animation: fadeIn 0.7s ease 0.5s forwards;
+  }
+
+  .hero-title .accent { color: var(--gold); }
+
+  .hero-subtitle {
+    font-family: var(--body);
+    font-size: 18px;
+    font-style: italic;
+    color: var(--muted);
+    margin-top: 20px;
+    max-width: 500px;
+    opacity: 0;
+    animation: fadeIn 0.7s ease 0.9s forwards;
+  }
+
+  .hero-meta {
+    display: flex;
+    gap: 40px;
+    margin-top: 48px;
+    opacity: 0;
+    animation: fadeIn 0.6s ease 1.1s forwards;
+  }
+
+  .meta-item { display: flex; flex-direction: column; gap: 2px; }
+  .meta-label { font-family: var(--mono); font-size: 9px; letter-spacing: 3px; color: var(--muted); text-transform: uppercase; }
+  .meta-value { font-family: var(--serif); font-size: 22px; color: var(--gold); }
+
+  /* ── LAYOUT ────────────────────────────────────── */
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  section {
+    padding: 72px 0;
+    border-top: 1px solid var(--border);
+  }
+
+  .section-label {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 4px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  h2 {
+    font-family: var(--serif);
+    font-size: 38px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 28px;
+    line-height: 1.2;
+  }
+
+  h3 {
+    font-family: var(--serif);
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--gold2);
+    margin: 32px 0 12px;
+  }
+
+  p {
+    color: #cec8b8;
+    margin-bottom: 18px;
+    max-width: 720px;
+  }
+
+  blockquote {
+    border-left: 3px solid var(--gold);
+    padding: 12px 24px;
+    margin: 28px 0;
+    font-style: italic;
+    color: var(--gold2);
+    background: rgba(201,168,76,0.06);
+    font-size: 19px;
+  }
+
+  .data-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin: 28px 0;
+  }
+
+  .data-cell {
+    background: var(--card);
+    padding: 20px;
+  }
+
+  .data-cell .dc-label { font-family: var(--mono); font-size: 9px; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; margin-bottom: 6px; }
+  .data-cell .dc-value { font-family: var(--serif); font-size: 20px; color: var(--gold); }
+  .data-cell .dc-sub   { font-size: 12px; color: var(--muted); margin-top: 4px; }
+
+  .timeline {
+    position: relative;
+    margin: 28px 0;
+    padding-left: 28px;
+    border-left: 1px solid var(--border);
+  }
+
+  .tl-item {
+    position: relative;
+    margin-bottom: 28px;
+  }
+
+  .tl-item::before {
+    content: '';
+    position: absolute;
+    left: -33px;
+    top: 7px;
+    width: 9px; height: 9px;
+    background: var(--gold);
+    border-radius: 50%;
+  }
+
+  .tl-year {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--gold);
+    letter-spacing: 2px;
+    margin-bottom: 4px;
+  }
+
+  .tl-text {
+    font-size: 15px;
+    color: #b8b0a0;
+    margin: 0;
+  }
+
+  /* ── FUNDAMENTALS SECTION ──────────────────────── */
+  #fundamentals {
+    background: var(--surface);
+  }
+
+  .fund-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    background: var(--border);
+    margin-top: 32px;
+  }
+
+  .fund-card {
+    background: var(--card);
+    padding: 28px;
+  }
+
+  .fund-card h4 {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 3px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .fund-card .desc {
+    font-size: 14px;
+    color: var(--muted);
+    margin-bottom: 14px;
+  }
+
+  .code-block {
+    background: #0d0d0d;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 14px;
+    font-family: var(--mono);
+    font-size: 11.5px;
+    color: #a0c8a0;
+    overflow-x: auto;
+    line-height: 1.7;
+    white-space: pre;
+  }
+
+  .code-block .kw  { color: #c792ea; }
+  .code-block .str { color: #c3e88d; }
+  .code-block .cm  { color: #546e7a; font-style: italic; }
+  .code-block .sel { color: #82aaff; }
+  .code-block .val { color: #f78c6c; }
+  .code-block .tag { color: #ff5370; }
+  .code-block .att { color: #ffcb6b; }
+
+  .example-badge {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    background: rgba(201,168,76,0.15);
+    color: var(--gold);
+    padding: 3px 8px;
+    border: 1px solid rgba(201,168,76,0.3);
+    border-radius: 2px;
+    margin-bottom: 8px;
+  }
+
+  /* ── SCROLL INDICATOR ──────────────────────────── */
+  .scroll-hint {
+    position: absolute;
+    bottom: 32px;
+    left: 72px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 3px;
+    color: var(--muted);
+    text-transform: uppercase;
+    opacity: 0;
+    animation: fadeIn 0.5s ease 1.5s forwards;
+  }
+
+  .scroll-hint::before {
+    content: '';
+    display: block;
+    width: 24px;
+    height: 1px;
+    background: var(--muted);
+  }
+
+  /* ── DIVIDER ───────────────────────────────────── */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 32px 0;
+  }
+
+  hr.gold {
+    border-color: rgba(201,168,76,0.3);
+  }
+
+  .highlight { color: var(--gold2); }
+
+  @media (max-width: 700px) {
+    #hero { padding: 48px 24px; }
+    .container { padding: 0 20px; }
+    .fund-grid { grid-template-columns: 1fr; }
+    .hero-flag { display: none; }
+    .data-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════
+     SUMMARY BAR — loads in < 0.5s on every open
+     ════════════════════════════════════════════ -->
+<div id="summary-bar">
+  <div class="tag">AI SUMMARY</div>
+  <div id="summary-lines">
+    <div id="summary-loading" style="display:flex;align-items:center;gap:10px;padding:4px 0;">
+      <div style="width:13px;height:13px;border:2px solid #2a2a2a;border-top-color:#c9a84c;border-radius:50%;animation:spin 0.7s linear infinite;flex-shrink:0;"></div>
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#888880;letter-spacing:1px;">Reading page<span id="dots"></span></span>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     HERO
+     ════════════════════════════════════════════ -->
+<div id="hero">
+  <div class="hero-flag">
+    <div class="stripe s-green"></div>
+    <div class="stripe s-white"><span class="flag-emblem">☀</span></div>
+    <div class="stripe s-red"></div>
+  </div>
+  <div class="hero-eyebrow">The Islamic Republic of Iran — A Complete Portrait</div>
+  <h1 class="hero-title">
+    <span class="accent">I</span>RAN
+  </h1>
+  <p class="hero-subtitle">Land of emperors, poets, and ancient fire — the cradle of one of humanity's great civilisations.</p>
+  <div class="hero-meta">
+    <div class="meta-item">
+      <span class="meta-label">Capital</span>
+      <span class="meta-value">Tehran</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">Population</span>
+      <span class="meta-value">89.1M</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">Area</span>
+      <span class="meta-value">1,648,195 km²</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">Currency</span>
+      <span class="meta-value">Iranian Rial</span>
+    </div>
+  </div>
+  <div class="scroll-hint">Scroll to explore</div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     MAIN CONTENT
+     ════════════════════════════════════════════ -->
+<div class="container">
+
+  <!-- § 1: GEOGRAPHY -->
+  <section id="geography">
+    <div class="section-label">01 — Geography</div>
+    <h2>The Land and Its Landscape</h2>
+
+    <p>Iran is a vast country in West Asia, sharing borders with Iraq to the west, Turkey and Armenia to the northwest, Azerbaijan and Turkmenistan to the north, Afghanistan and Pakistan to the east, and the Persian Gulf and Gulf of Oman to the south. Its total land area of approximately 1.648 million square kilometres makes it the 17th-largest country in the world.</p>
+
+    <p>The country's terrain is dominated by the Iranian Plateau, one of the great plateaux of Asia. Two major mountain chains frame this interior plateau: the Alborz range in the north and the Zagros range running northwest to southeast. The Alborz reaches its pinnacle at Mount Damavand — at 5,610 metres, the highest peak in the Middle East and the highest volcano in Asia.</p>
+
+    <p>To the east and southeast, the plateau descends into two great salt deserts: the Dasht-e Kavir (Great Salt Desert) and the Dasht-e Lut (Desert of Emptiness). The Dasht-e Lut has been recorded as one of the hottest surfaces on Earth, with land-surface temperatures measured at over 70°C by satellites in 2005 and 2006.</p>
+
+    <p>Iran's rivers are relatively few and generally modest in flow. The Karun, flowing through Khuzestan province, is the only navigable river. The Zayandeh River irrigates the ancient city of Isfahan. The Lake Urmia in the northwest — once the largest lake in the Middle East — has severely shrunk in recent decades due to drought, diversion, and mismanagement.</p>
+
+    <div class="data-grid">
+      <div class="data-cell"><div class="dc-label">Highest Peak</div><div class="dc-value">Mt. Damavand</div><div class="dc-sub">5,610 m</div></div>
+      <div class="data-cell"><div class="dc-label">Largest Desert</div><div class="dc-value">Dasht-e Kavir</div><div class="dc-sub">~77,000 km²</div></div>
+      <div class="data-cell"><div class="dc-label">Longest River</div><div class="dc-value">Karun</div><div class="dc-sub">950 km</div></div>
+      <div class="data-cell"><div class="dc-label">Coastline</div><div class="dc-value">2,440 km</div><div class="dc-sub">Persian Gulf &amp; Oman</div></div>
+    </div>
+
+    <p>Iran's climate varies enormously. The Caspian coast in the north is subtropical and humid — lush green forests receive up to 2,000 mm of rainfall annually. The central plateau is arid and semi-arid, with temperature extremes. The northern plains are fertile, the western highlands are cold and snowy in winter, and the southern coast is hot and humid year-round.</p>
+
+    <blockquote>"From the snows of the Alborz to the burning sands of the Lut — Iran contains the extremes of Earth's geography within a single political boundary."</blockquote>
+  </section>
+
+  <!-- § 2: HISTORY -->
+  <section id="history">
+    <div class="section-label">02 — History</div>
+    <h2>Seven Thousand Years of Civilisation</h2>
+
+    <p>The territory of modern Iran has been inhabited for at least 7,000 years. Some of the earliest known farming communities arose on the Iranian plateau. The Elamite civilisation, centred on Susa in today's Khuzestan, emerged around 3200 BCE and developed one of the earliest writing systems alongside ancient Sumer.</p>
+
+    <h3>The Persian Empires</h3>
+
+    <p>The Medes, an Iranian people, unified much of the plateau into the first Iranian empire around 678 BCE. The Achaemenid Empire, founded by Cyrus the Great in 550 BCE, became the largest empire the world had ever seen — stretching from the Balkans and Egypt to Central Asia and northwestern India. Cyrus is remarkable in world history for his Cylinder, considered one of the first declarations of human rights, freeing the Babylonian Jews from captivity.</p>
+
+    <p>Darius I expanded the empire further and created a sophisticated administrative system with provinces (satrapies), a road network including the Royal Road, and a standardised currency. The empire thrived until Alexander the Great conquered it between 334–330 BCE, though Persian culture and language quickly asserted themselves over the Macedonian conquerors.</p>
+
+    <div class="timeline">
+      <div class="tl-item"><div class="tl-year">~3200 BCE</div><p class="tl-text">Elamite civilisation emerges at Susa with proto-writing systems.</p></div>
+      <div class="tl-item"><div class="tl-year">550 BCE</div><p class="tl-text">Cyrus the Great founds the Achaemenid Empire, the world's first superpower.</p></div>
+      <div class="tl-item"><div class="tl-year">330 BCE</div><p class="tl-text">Alexander the Great conquers Persepolis; the Achaemenid era ends.</p></div>
+      <div class="tl-item"><div class="tl-year">247 BCE</div><p class="tl-text">Parthian Empire rises, reviving Iranian rule for nearly 500 years.</p></div>
+      <div class="tl-item"><div class="tl-year">224 CE</div><p class="tl-text">Sassanid Empire founded — a golden age of Persian art, architecture, and Zoroastrianism.</p></div>
+      <div class="tl-item"><div class="tl-year">651 CE</div><p class="tl-text">Arab Muslim conquest ends the Sassanid Empire; Islam spreads across Persia.</p></div>
+      <div class="tl-item"><div class="tl-year">1501</div><p class="tl-text">Safavid dynasty unifies Iran and establishes Twelver Shia Islam as the state religion.</p></div>
+      <div class="tl-item"><div class="tl-year">1921</div><p class="tl-text">Reza Khan seizes power, later crowned as Reza Shah Pahlavi, launching rapid modernisation.</p></div>
+      <div class="tl-item"><div class="tl-year">1979</div><p class="tl-text">The Islamic Revolution; Ayatollah Khomeini establishes the Islamic Republic of Iran.</p></div>
+      <div class="tl-item"><div class="tl-year">1980–88</div><p class="tl-text">Iran-Iraq War — one of the deadliest conflicts of the 20th century, with up to 1 million casualties.</p></div>
+      <div class="tl-item"><div class="tl-year">2015</div><p class="tl-text">Joint Comprehensive Plan of Action (JCPOA) nuclear agreement signed with world powers.</p></div>
+    </div>
+
+    <p>The Sassanid Empire (224–651 CE) represented a cultural and architectural renaissance. Grand palaces, intricate silverwork, and the spread of Zoroastrianism — the world's first monotheistic religion — defined this era. The Arab conquest introduced Islam to the Persians, who would, over centuries, transform it through their own philosophical traditions, giving rise to a uniquely Persian-Islamic synthesis in art, architecture, and mystical thought known as Sufism.</p>
+
+    <p>The Safavid dynasty (1501–1736) brought political unity and architectural brilliance. Isfahan under Shah Abbas I became one of the most beautiful cities in the world, and the declaration of Twelver Shi'a Islam as the state religion created Iran's enduring identity as the spiritual heart of Shia Islam.</p>
+  </section>
+
+  <!-- § 3: CULTURE -->
+  <section id="culture">
+    <div class="section-label">03 — Culture &amp; Society</div>
+    <h2>The Persian Mind — Literature, Art, and Tradition</h2>
+
+    <p>Persian culture is one of the oldest continuous civilisations on Earth. The Persian language — Farsi — has been spoken and written for over three thousand years. It was the language of diplomacy, literature, and scholarship across a vast region from Istanbul to Delhi during the medieval era.</p>
+
+    <h3>Poetry: The Soul of Iran</h3>
+
+    <p>Persian literature is dominated by its poetry tradition. The Shahnameh (Book of Kings) by Ferdowsi, completed in 1010 CE, is a fifty-thousand-couplet epic recounting the mythical and historical past of Persia — the longest poem written by a single author in world literature. It is credited with preserving the Persian language through centuries of Arabic dominance.</p>
+
+    <p>Omar Khayyam (1048–1131) was a mathematician, astronomer, and poet whose Rubaiyat became one of the most widely translated works in the world. Rumi (1207–1273), born in Khorasan, wrote the Masnavi — six volumes of spiritual poetry exploring love, loss, and the soul's longing for the divine. Hafez (1315–1390), writing in Shiraz, is considered the master of the ghazal form. His Divan is found in nearly every Iranian home today and is used for divination.</p>
+
+    <blockquote>"Out beyond ideas of wrongdoing and rightdoing, there is a field. I'll meet you there." — Rumi</blockquote>
+
+    <h3>Architecture</h3>
+
+    <p>Iranian architecture is a world heritage in itself. The Palace of Persepolis, begun by Darius I around 518 BCE, combined Achaemenid, Egyptian, Greek, and Mesopotamian influences into a monumental ceremonial complex. The Friday Mosque of Isfahan (Masjid-e Jame) is an architectural museum spanning twelve centuries, demonstrating every major style from the Seljuk to the Safavid. The blue-tiled dome of the Imam Mosque in Isfahan is considered one of the most beautiful buildings on Earth.</p>
+
+    <h3>Nowruz — The Persian New Year</h3>
+
+    <p>Nowruz, the Persian New Year celebrated on the spring equinox (around March 20), is Iran's most important festival. It predates Islam by thousands of years, rooted in Zoroastrian tradition. Families prepare a symbolic table called the Haft Sin — seven items beginning with the letter S that represent renewal, health, prosperity, patience, love, beauty, and the rising of the sun. In 2010, UNESCO added Nowruz to its Intangible Cultural Heritage list.</p>
+
+    <div class="data-grid">
+      <div class="data-cell"><div class="dc-label">UNESCO Sites</div><div class="dc-value">27</div><div class="dc-sub">World Heritage Sites</div></div>
+      <div class="data-cell"><div class="dc-label">Official Language</div><div class="dc-value">Farsi</div><div class="dc-sub">Persian</div></div>
+      <div class="data-cell"><div class="dc-label">Literacy Rate</div><div class="dc-value">88%</div><div class="dc-sub">Adult population</div></div>
+      <div class="data-cell"><div class="dc-label">Universities</div><div class="dc-value">3,000+</div><div class="dc-sub">Public &amp; private</div></div>
+    </div>
+  </section>
+
+  <!-- § 4: ECONOMY -->
+  <section id="economy">
+    <div class="section-label">04 — Economy</div>
+    <h2>Oil, Sanctions, and Resilience</h2>
+
+    <p>Iran holds the world's fourth-largest proven oil reserves (approximately 157 billion barrels) and the world's second-largest natural gas reserves (approximately 34 trillion cubic metres). Historically, the oil sector has been the backbone of government revenue, though decades of sanctions have forced diversification.</p>
+
+    <p>Iran's economy is a mixed one: the state controls major industries including energy, banking, and heavy manufacturing, while the private sector operates in agriculture, trade, and services. The bazaar — the traditional marketplace — remains a powerful economic and cultural institution. Tehran's Grand Bazaar is one of the largest covered bazaars in the world.</p>
+
+    <p>The 1979 revolution and subsequent nationalisation of industries disrupted Western investment, and the Iran-Iraq war of the 1980s devastated the economy. From the 1990s onward, US, EU, and UN sanctions — particularly targeting oil exports, banking, and technology — have constrained economic growth, caused currency depreciation, and fuelled inflation. Despite this, Iran has developed a diversified industrial base including automobiles, chemicals, steel, and pharmaceuticals largely through domestic production.</p>
+
+    <h3>Agriculture and Beyond</h3>
+
+    <p>Iran is one of the world's largest producers of pistachios, saffron, and dried fruits — all significant export earners. Saffron, the world's most expensive spice by weight, is cultivated in the Khorasan region. Iran accounts for roughly 90% of global saffron production. The country also produces significant quantities of wheat, rice, barley, dates, and citrus fruits.</p>
+  </section>
+
+  <!-- § 5: POLITICS -->
+  <section id="politics">
+    <div class="section-label">05 — Politics &amp; Government</div>
+    <h2>The Islamic Republic — A Unique Political Structure</h2>
+
+    <p>Iran's government is a constitutional theocracy — a unique hybrid of republican and Islamic institutions. The Supreme Leader (Rahbar) is the highest authority in the land, responsible for general policy, command of the armed forces, and oversight of all branches. The current Supreme Leader is Ali Khamenei, holding office since 1989 following the death of the founder, Ayatollah Ruhollah Khomeini.</p>
+
+    <p>An elected President leads the executive branch and oversees the day-to-day administration of government. The Islamic Consultative Assembly (Majlis) is the legislature with 290 elected members. All candidates for election are vetted by the Guardian Council — twelve jurists and Islamic scholars who can disqualify candidates deemed insufficiently loyal to Islamic principles.</p>
+
+    <p>Iran has a complicated and often adversarial relationship with the United States, rooted in the 1953 CIA-backed coup that ousted the democratically elected Prime Minister Mohammad Mosaddegh, and the 1979 hostage crisis. Relations with Israel are also deeply hostile; Iran does not recognise the Israeli state. The nuclear programme remains a central issue of global concern, with Iran asserting the right to civilian nuclear power while Western powers fear weapons development.</p>
+  </section>
+
+  <!-- § 6: SCIENCE -->
+  <section id="science">
+    <div class="section-label">06 — Science &amp; Intellectual Legacy</div>
+    <h2>The House of Wisdom and Its Heirs</h2>
+
+    <p>Iran's intellectual tradition stretches back millennia. During the Islamic Golden Age (8th–14th centuries), Persian scholars made foundational contributions to mathematics, astronomy, medicine, and philosophy. Muhammad ibn Musa al-Khwarizmi, born in the Khwarazm region, gave algebra its name (from his book Al-Kitab al-mukhtasar fi hisab al-jabr) and his Latinised name gave us the word "algorithm."</p>
+
+    <p>Avicenna (Ibn Sina, 980–1037), born near Bukhara, wrote the Canon of Medicine — a medical encyclopaedia that remained the standard textbook in European medical schools until the 17th century. Omar Khayyam derived a geometric solution to cubic equations and reformed the Persian calendar with an accuracy exceeding the Gregorian calendar. Nasir al-Din al-Tusi built the Maragheh observatory and wrote foundational works in trigonometry.</p>
+
+    <p>Today, Iran's scientific output has grown significantly despite sanctions. It ranks among the top producers of scientific papers in the region, particularly in nanoscience, polymer chemistry, and materials science. Iran's universities graduate large numbers of engineers and scientists annually. The country launched its first domestic satellite, Omid, in 2009.</p>
+  </section>
+
+</div><!-- /container -->
+
+<!-- ════════════════════════════════════════════
+     FUNDAMENTALS SECTION
+     ════════════════════════════════════════════ -->
+<section id="fundamentals" style="padding: 72px 0;">
+<div class="container">
+  <div class="section-label">WEBSITE BUILDING BLOCKS</div>
+  <h2>Fundamentals Used in This Page</h2>
+  <p>This page is built with three core web technologies: <span class="highlight">HTML</span>, <span class="highlight">CSS</span>, and <span class="highlight">JavaScript</span>. Below are the key techniques used — each explained with a working example.</p>
+
+  <div class="fund-grid">
+
+    <!-- 1: HTML STRUCTURE -->
+    <div class="fund-card">
+      <h4>01 — HTML Semantic Structure</h4>
+      <p class="desc">HTML (HyperText Markup Language) defines the content and structure of a page using nested elements called "tags". Semantic tags like &lt;section&gt;, &lt;header&gt;, and &lt;nav&gt; describe meaning, not just appearance.</p>
+      <div class="example-badge">Basic Example</div>
+      <div class="code-block"><span class="tag">&lt;section</span> <span class="att">id=</span><span class="str">"geography"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;h2&gt;</span>The Land<span class="tag">&lt;/h2&gt;</span>
+  <span class="tag">&lt;p&gt;</span>Iran spans 1.64M km²...<span class="tag">&lt;/p&gt;</span>
+<span class="tag">&lt;/section&gt;</span>
+
+<span class="cm">/* Each section = one topic block */</span>
+<span class="cm">/* id="" lets CSS and JS target it */</span></div>
+    </div>
+
+    <!-- 2: CSS VARIABLES -->
+    <div class="fund-card">
+      <h4>02 — CSS Custom Properties (Variables)</h4>
+      <p class="desc">CSS variables (defined with --) let you store reusable values like colours and fonts. Change one variable and every element using it updates automatically — the backbone of any design system.</p>
+      <div class="example-badge">Basic Example</div>
+      <div class="code-block"><span class="sel">:root</span> {
+  <span class="att">--gold</span>: <span class="val">#c9a84c</span>;
+  <span class="att">--bg</span>:   <span class="val">#0a0a0a</span>;
+}
+
+<span class="sel">h2</span> {
+  <span class="cm">/* uses the variable */</span>
+  <span class="att">color</span>: <span class="kw">var</span>(--gold);
+}
+
+<span class="sel">body</span> {
+  <span class="att">background</span>: <span class="kw">var</span>(--bg);
+}</div>
+    </div>
+
+    <!-- 3: CSS ANIMATIONS -->
+    <div class="fund-card">
+      <h4>03 — CSS @keyframes Animations</h4>
+      <p class="desc">The summary bar and hero text use @keyframes — a CSS feature that defines an animation's start and end states. The "animation-delay" property staggers each line, creating the fast sequential load effect you see at the top.</p>
+      <div class="example-badge">Basic Example</div>
+      <div class="code-block"><span class="cm">/* Define the animation */</span>
+<span class="kw">@keyframes</span> <span class="sel">slideDown</span> {
+  <span class="kw">from</span> { transform: translateY(-100%); }
+  <span class="kw">to</span>   { transform: translateY(0); }
+}
+
+<span class="cm">/* Apply it to the bar */</span>
+<span class="sel">#summary-bar</span> {
+  animation: slideDown <span class="val">0.4s</span> ease <span class="val">0.1s</span> forwards;
+}
+
+<span class="cm">/* Stagger each line */</span>
+<span class="sel">.sum-line:nth-child(2)</span> {
+  animation-delay: <span class="val">0.68s</span>;
+}</div>
+    </div>
+
+    <!-- 4: CSS GRID -->
+    <div class="fund-card">
+      <h4>04 — CSS Grid Layout</h4>
+      <p class="desc">CSS Grid creates two-dimensional layouts. The data cards (capitals, populations etc.) use a grid that automatically fills columns. "auto-fill" with "minmax" makes it responsive: cards rearrange on small screens without any JavaScript.</p>
+      <div class="example-badge">Basic Example</div>
+      <div class="code-block"><span class="sel">.data-grid</span> {
+  display: <span class="val">grid</span>;
+
+  <span class="cm">/* Fill as many 200px cols as fit */</span>
+  grid-template-columns:
+    <span class="kw">repeat</span>(auto-fill, <span class="kw">minmax</span>(<span class="val">200px</span>, 1fr));
+
+  <span class="cm">/* 1px gap = thin border effect */</span>
+  gap: <span class="val">1px</span>;
+  background: <span class="kw">var</span>(--border);
+}</div>
+    </div>
+
+    <!-- 5: CSS POSITION FIXED -->
+    <div class="fund-card">
+      <h4>05 — CSS position: fixed</h4>
+      <p class="desc">The summary bar stays visible as you scroll because of "position: fixed". This removes the element from the normal document flow and pins it relative to the viewport. "top: 0" and "z-index: 1000" keep it glued to the top, above all other content.</p>
+      <div class="example-badge">Basic Example</div>
+      <div class="code-block"><span class="sel">#summary-bar</span> {
+  <span class="cm">/* Pins to viewport, not page */</span>
+  position: <span class="val">fixed</span>;
+
+  top:   <span class="val">0</span>;  <span class="cm">/* glued to top */</span>
+  left:  <span class="val">0</span>;
+  right: <span class="val">0</span>;  <span class="cm">/* full width */</span>
+
+  <span class="cm">/* Renders above other elements */</span>
+  z-index: <span class="val">1000</span>;
+}</div>
+    </div>
+
+    <!-- 6: CSS PSEUDO-ELEMENTS -->
+    <div class="fund-card">
+      <h4>06 — CSS ::before Pseudo-Elements</h4>
+      <p class="desc">"::before" inserts decorative content before an element without adding HTML. The timeline dots and the hero background glows are entirely CSS — no extra HTML tags needed. This keeps the HTML clean and the design flexible.</p>
+      <div class="example-badge">Basic Example</div>
+      <div class="code-block"><span class="sel">.tl-item::before</span> {
+  <span class="cm">/* Required to display */</span>
+  content: <span class="str">''</span>;
+
+  <span class="cm">/* Position relative to parent */</span>
+  position: <span class="val">absolute</span>;
+  left:  <span class="val">-33px</span>;
+  top:   <span class="val">7px</span>;
+
+  <span class="cm">/* The visible dot */</span>
+  width:  <span class="val">9px</span>;
+  height: <span class="val">9px</span>;
+  background:    <span class="kw">var</span>(--gold);
+  border-radius: <span class="val">50%</span>;
+}</div>
+    </div>
+
+    <!-- 7: GOOGLE FONTS -->
+    <div class="fund-card">
+      <h4>07 — Web Fonts via &lt;link&gt;</h4>
+      <p class="desc">Typography is loaded from Google Fonts using a &lt;link&gt; tag in the &lt;head&gt;. This fetches font files from Google's CDN. The CSS font-family property then applies them. Three fonts are used here: Playfair Display for titles, IBM Plex Mono for labels, and Lora for body text.</p>
+      <div class="example-badge">Basic Example</div>
+      <div class="code-block"><span class="cm">&lt;!-- In the HTML &lt;head&gt; --&gt;</span>
+<span class="tag">&lt;link</span> <span class="att">href=</span><span class="str">"https://fonts.googleapis.com
+  /css2?family=Playfair+Display:
+  wght@700&display=swap"</span>
+  <span class="att">rel=</span><span class="str">"stylesheet"</span><span class="tag">/&gt;</span>
+
+<span class="cm">/* Then use in CSS */</span>
+<span class="sel">h1</span> {
+  font-family: <span class="str">'Playfair Display'</span>, serif;
+}</div>
+    </div>
+
+    <!-- 8: CSS CLAMP -->
+    <div class="fund-card">
+      <h4>08 — CSS clamp() for Fluid Type</h4>
+      <p class="desc">The hero title scales smoothly between mobile and desktop using clamp(). It takes three values: minimum, preferred, maximum. Instead of jumping at breakpoints, the font grows proportionally with the viewport width — no JavaScript required.</p>
+      <div class="example-badge">Basic Example</div>
+      <div class="code-block"><span class="sel">.hero-title</span> {
+  <span class="cm">/* min=64px, ideal=10vw, max=128px */</span>
+  font-size: <span class="kw">clamp</span>(<span class="val">64px</span>, <span class="val">10vw</span>, <span class="val">128px</span>);
+}
+
+<span class="cm">/* On a 900px screen:
+   10vw = 90px → used (in range)
+
+   On a 500px screen:
+   10vw = 50px → clamped to 64px
+
+   On a 2000px screen:
+   10vw = 200px → clamped to 128px */</span></div>
+    </div>
+
+  </div><!-- /fund-grid -->
+
+  <hr class="gold" style="margin-top:48px;"/>
+  <p style="margin-top:28px;font-size:14px;color:var(--muted);font-family:var(--mono);">
+    TOTAL TECHNOLOGIES: HTML5 semantic structure · CSS3 custom properties · @keyframes animation · CSS Grid &amp; Flexbox · position:fixed · ::before pseudo-elements · clamp() fluid typography · Google Fonts CDN · CSS radial-gradient backgrounds · CSS transform &amp; transition · nth-child selectors · animation-delay staggering
+  </p>
+
+</div>
+</section>
+
+<!-- FOOTER -->
+<footer style="border-top:1px solid var(--border);padding:40px 32px;text-align:center;">
+  <p style="font-family:var(--mono);font-size:10px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;">
+    IRAN — A One-Page Showcase &nbsp;·&nbsp; HTML · CSS · Vanilla JS &nbsp;·&nbsp; All fundamentals demonstrated above
+  </p>
+</footer>
+
+<script>
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+//  PASTE YOUR GEMINI KEY HERE
+//  Get free at: aistudio.google.com
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+const GEMINI_KEY = 'AIzaSyAWQxUGjDg33-YI-uiYkbytQdSf83O9BNY';
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+(async function () {
+
+  // Animate the loading dots
+  const dotsEl = document.getElementById('dots');
+  const dotsFrames = ['', '.', '..', '...'];
+  let di = 0;
+  const dotsTimer = setInterval(() => { dotsEl.textContent = dotsFrames[di++ % 4]; }, 400);
+
+  // Read all visible text from the page body
+  function getPageText() {
+    const skip = ['summary-bar', 'fundamentals'];
+    const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+    let text = '';
+    while (walker.nextNode()) {
+      const el = walker.currentNode.parentElement;
+      if (!el) continue;
+      if (skip.some(id => el.closest('#' + id))) continue;
+      const t = walker.currentNode.textContent.trim();
+      if (t.length > 2) text += t + ' ';
+      if (text.length > 6000) break;
+    }
+    return text.replace(/\s+/g, ' ').trim();
+  }
+
+  // Call Gemini and get 5-point JSON summary
+  async function callGemini(pageText) {
+    const res = await fetch(
+      'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=' + GEMINI_KEY,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contents: [{ parts: [{ text:
+            `Read this page content carefully and summarise it into exactly 5 key points.
+Return ONLY a raw JSON array of 5 objects. Each object must have:
+- "key": a short UPPERCASE label (1-2 words, e.g. GEOGRAPHY, HISTORY, ECONOMY)
+- "text": one clear sentence summarising that point, max 110 characters
+
+Return ONLY the array starting with [ and ending with ]. No markdown, no backticks, nothing else.
+
+Page content:
+${pageText}`
+          }] }],
+          generationConfig: { temperature: 0.2, maxOutputTokens: 500 }
+        })
+      }
+    );
+    if (!res.ok) throw new Error('Gemini ' + res.status);
+    const data = await res.json();
+    const raw = data.candidates[0].content.parts[0].text.replace(/```json|```/g, '').trim();
+    const arr = JSON.parse(raw);
+    if (!Array.isArray(arr)) throw new Error('Bad format');
+    return arr;
+  }
+
+  // Render lines with staggered animation (matching existing CSS style)
+  function renderLines(lines) {
+    clearInterval(dotsTimer);
+    const container = document.getElementById('summary-lines');
+    container.innerHTML = '';
+    const nums = ['①','②','③','④','⑤'];
+    lines.forEach((item, i) => {
+      const div = document.createElement('div');
+      div.className = 'sum-line';
+      div.style.animationDelay = (0.55 + i * 0.13) + 's';
+      div.style.animation = `lineIn 0.25s ease ${0.55 + i * 0.13}s forwards`;
+      div.innerHTML = `${nums[i] || (i+1)} <span>${item.key}:</span> ${item.text}`;
+      container.appendChild(div);
+    });
+  }
+
+  // Show error if Gemini fails
+  function renderError(msg) {
+    clearInterval(dotsTimer);
+    document.getElementById('summary-lines').innerHTML =
+      `<div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#b03a2e;">✗ ${msg}</div>`;
+  }
+
+  // Run
+  try {
+    const text  = getPageText();
+    const lines = await callGemini(text);
+    renderLines(lines);
+  } catch (err) {
+    console.error(err);
+    renderError(err.message);
+  }
+
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iraq InfoHub - Cradle of Civilization</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Reem+Kufi:wght@400;500;600;700&family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --gold: #d4a843;
+            --gold-light: #f4d06f;
+            --deep-blue: #1a365d;
+            --royal-blue: #2c5282;
+            --emerald: #047857;
+            --cream: #fef9f3;
+            --sand: #f5f0e6;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #fef9f3 0%, #f5f0e6 50%, #e8e0d5 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        /* Arabic Calligraphy Fonts */
+        .font-arabic {
+            font-family: 'Amiri', serif;
+        }
+        
+        .font-heading {
+            font-family: 'Reem Kufi', sans-serif;
+        }
+        
+        .font-elegant {
+            font-family: 'Cinzel', serif;
+        }
+        
+        .font-body {
+            font-family: 'Cormorant Garamond', serif;
+        }
+        
+        /* Summary Bar */
+        #summary-bar {
+            position: fixed;
+            top: -300px;
+            left: 0;
+            right: 0;
+            background: linear-gradient(135deg, #1a365d 0%, #2c5282 30%, #3182ce 70%, #63b3ed 100%);
+            color: white;
+            z-index: 1000;
+            transition: top 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 20px 60px rgba(26, 54, 93, 0.5);
+            border-bottom: 3px solid var(--gold);
+        }
+        
+        #summary-bar.visible {
+            top: 0;
+        }
+        
+        #summary-bar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d4a843' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            pointer-events: none;
+        }
+        
+        /* Loading Animation */
+        .loading-dots {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+        }
+        
+        .loading-dot {
+            width: 10px;
+            height: 10px;
+            background: var(--gold);
+            border-radius: 50%;
+            animation: loadingPulse 1.4s infinite ease-in-out;
+        }
+        
+        .loading-dot:nth-child(1) { animation-delay: -0.32s; }
+        .loading-dot:nth-child(2) { animation-delay: -0.16s; }
+        .loading-dot:nth-child(3) { animation-delay: 0s; }
+        
+        @keyframes loadingPulse {
+            0%, 80%, 100% { transform: scale(0.6); opacity: 0.5; }
+            40% { transform: scale(1); opacity: 1; }
+        }
+        
+        /* Decorative Borders */
+        .ornament-border {
+            position: relative;
+        }
+        
+        .ornament-border::before,
+        .ornament-border::after {
+            content: '✦';
+            position: absolute;
+            color: var(--gold);
+            font-size: 1.5rem;
+        }
+        
+        .ornament-border::before {
+            left: 50%;
+            top: -10px;
+            transform: translateX(-50%);
+        }
+        
+        .ornament-border::after {
+            left: 50%;
+            bottom: -10px;
+            transform: translateX(-50%);
+        }
+        
+        /* Page Content Animation */
+        .page-content {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .page-content.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Navigation */
+        .nav-link {
+            position: relative;
+            padding: 0.5rem 0;
+            transition: all 0.3s ease;
+            font-family: 'Reem Kufi', sans-serif;
+            font-weight: 500;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--gold), var(--gold-light));
+            transition: width 0.4s ease;
+        }
+        
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+        
+        .nav-link.active {
+            color: var(--gold);
+        }
+        
+        .nav-link:hover {
+            color: var(--gold);
+        }
+        
+        /* Cards */
+        .feature-card {
+            background: linear-gradient(145deg, #ffffff 0%, #fef9f3 100%);
+            border: 1px solid rgba(212, 168, 67, 0.2);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--gold), var(--gold-light), var(--gold));
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+        
+        .feature-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px rgba(26, 54, 93, 0.15);
+            border-color: rgba(212, 168, 67, 0.5);
+        }
+        
+        /* Drop Cap */
+        .drop-cap::first-letter {
+            float: left;
+            font-size: 4.5rem;
+            line-height: 0.8;
+            padding-right: 0.75rem;
+            padding-top: 0.25rem;
+            color: var(--gold);
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Scroll Progress */
+        #scroll-progress {
+            position: fixed;
+            top: 120px;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--gold), var(--gold-light), var(--gold));
+            z-index: 999;
+            width: 0%;
+            transition: width 0.1s ease;
+            box-shadow: 0 0 10px rgba(212, 168, 67, 0.5);
+        }
+        
+        /* Islamic Pattern Background */
+        .islamic-pattern {
+            background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d4a843' fill-opacity='0.08'%3E%3Cpath d='M40 0l5 10h10l-5 10 5 10h-10l-5 10-5-10H25l5-10-5-10h10L40 0zm0 40l5 10h10l-5 10 5 10h-10l-5 10-5-10H25l5-10-5-10h10L40 40z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+        
+        /* Arabic Calligraphy Decorative */
+        .arabic-decor {
+            font-family: 'Amiri', serif;
+            font-size: 2rem;
+            color: var(--gold);
+            opacity: 0.3;
+            text-align: center;
+            margin: 2rem 0;
+        }
+        
+        /* Section Dividers */
+        .section-divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin: 3rem 0;
+        }
+        
+        .section-divider::before,
+        .section-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+        }
+        
+        .section-divider-icon {
+            color: var(--gold);
+            font-size: 1.5rem;
+        }
+        
+        /* Image Hover Effects */
+        .image-container {
+            position: relative;
+            overflow: hidden;
+            border-radius: 1rem;
+        }
+        
+        .image-container img {
+            transition: transform 0.6s ease;
+        }
+        
+        .image-container:hover img {
+            transform: scale(1.05);
+        }
+        
+        .image-container::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, transparent 60%, rgba(26, 54, 93, 0.3) 100%);
+            pointer-events: none;
+        }
+        
+        /* Mobile Menu */
+        #mobile-menu {
+            transform: translateX(-100%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        #mobile-menu.open {
+            transform: translateX(0);
+        }
+        
+        /* Typing Cursor */
+        .typing-cursor::after {
+            content: '▋';
+            animation: blink 1s infinite;
+            color: var(--gold);
+        }
+        
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+        
+        /* Gold Text Gradient */
+        .text-gold-gradient {
+            background: linear-gradient(135deg, var(--gold), var(--gold-light), var(--gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        /* Card Icons */
+        .icon-circle {
+            background: linear-gradient(135deg, var(--deep-blue), var(--royal-blue));
+            border: 2px solid var(--gold);
+        }
+        
+        /* Section Headers */
+        .section-header {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-header::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+        }
+        
+        /* Bismillah Decorative */
+        .bismillah {
+            font-family: 'Amiri', serif;
+            font-size: 1.5rem;
+            color: var(--gold);
+            text-align: center;
+            margin-bottom: 2rem;
+            opacity: 0.8;
+        }
+        
+        /* Responsive Typography */
+        @media (max-width: 768px) {
+            .drop-cap::first-letter {
+                font-size: 3rem;
+            }
+        }
+    </style>
+</head>
+<body class="islamic-pattern">
+    
+    <!-- Summary Bar -->
+    <div id="summary-bar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5">
+            <div class="flex items-start justify-between gap-4">
+                <div class="flex-1">
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="w-8 h-8 rounded-full bg-gradient-to-br from-yellow-400 to-yellow-600 flex items-center justify-center">
+                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                            </svg>
+                        </div>
+                        <span class="text-xs font-heading uppercase tracking-widest opacity-90" style="color: var(--gold);">AI Auto-Summary</span>
+                    </div>
+                    <div id="summary-loading" class="flex items-center gap-3">
+                        <div class="loading-dots">
+                            <div class="loading-dot"></div>
+                            <div class="loading-dot"></div>
+                            <div class="loading-dot"></div>
+                        </div>
+                        <span class="text-sm font-body italic opacity-90">Analyzing page content...</span>
+                    </div>
+                    <p id="summary-text" class="text-base md:text-lg font-body leading-relaxed hidden typing-cursor"></p>
+                </div>
+                <button onclick="closeSummary()" class="text-white opacity-60 hover:opacity-100 transition p-2 hover:bg-white/10 rounded-full">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Scroll Progress -->
+    <div id="scroll-progress"></div>
+    
+    <!-- Navigation -->
+    <nav class="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 shadow-2xl sticky top-0 z-50 border-b border-yellow-600/30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex items-center gap-3">
+                    <div class="w-12 h-12 rounded-full bg-gradient-to-br from-yellow-500 to-yellow-700 flex items-center justify-center shadow-lg border-2 border-yellow-400">
+                        <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <span class="text-2xl font-heading font-bold text-gold-gradient">Iraq InfoHub</span>
+                        <p class="text-xs text-yellow-200/70 font-body italic">Cradle of Civilization</p>
+                    </div>
+                </div>
+                
+                <!-- Desktop Nav -->
+                <div class="hidden md:flex items-center gap-1">
+                    <a href="#" onclick="loadPage('home')" class="nav-link text-yellow-100/90 hover:text-yellow-400 px-4" data-page="home">Home</a>
+                    <a href="#" onclick="loadPage('history')" class="nav-link text-yellow-100/90 hover:text-yellow-400 px-4" data-page="history">History</a>
+                    <a href="#" onclick="loadPage('culture')" class="nav-link text-yellow-100/90 hover:text-yellow-400 px-4" data-page="culture">Culture</a>
+                    <a href="#" onclick="loadPage('geography')" class="nav-link text-yellow-100/90 hover:text-yellow-400 px-4" data-page="geography">Geography</a>
+                    <a href="#" onclick="loadPage('economy')" class="nav-link text-yellow-100/90 hover:text-yellow-400 px-4" data-page="economy">Economy</a>
+                    <a href="#" onclick="loadPage('tech')" class="nav-link text-yellow-100/90 hover:text-yellow-400 px-4" data-page="tech">Tech</a>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <button onclick="toggleMobileMenu()" class="md:hidden text-yellow-400 hover:text-yellow-300 transition">
+                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="fixed inset-0 bg-gradient-to-b from-slate-900 to-slate-800 z-40 md:hidden">
+        <div class="p-6">
+            <div class="flex justify-between items-center mb-8">
+                <span class="text-xl font-heading font-bold text-gold-gradient">Menu</span>
+                <button onclick="toggleMobileMenu()" class="text-yellow-400 hover:text-yellow-300 transition">
+                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="flex flex-col gap-4">
+                <a href="#" onclick="loadPage('home'); toggleMobileMenu()" class="nav-link text-2xl text-yellow-100/90 hover:text-yellow-400 py-3 border-b border-yellow-600/20">Home</a>
+                <a href="#" onclick="loadPage('history'); toggleMobileMenu()" class="nav-link text-2xl text-yellow-100/90 hover:text-yellow-400 py-3 border-b border-yellow-600/20">History</a>
+                <a href="#" onclick="loadPage('culture'); toggleMobileMenu()" class="nav-link text-2xl text-yellow-100/90 hover:text-yellow-400 py-3 border-b border-yellow-600/20">Culture</a>
+                <a href="#" onclick="loadPage('geography'); toggleMobileMenu()" class="nav-link text-2xl text-yellow-100/90 hover:text-yellow-400 py-3 border-b border-yellow-600/20">Geography</a>
+                <a href="#" onclick="loadPage('economy'); toggleMobileMenu()" class="nav-link text-2xl text-yellow-100/90 hover:text-yellow-400 py-3 border-b border-yellow-600/20">Economy</a>
+                <a href="#" onclick="loadPage('tech'); toggleMobileMenu()" class="nav-link text-2xl text-yellow-100/90 hover:text-yellow-400 py-3 border-b border-yellow-600/20">Tech</a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 mt-24">
+        
+        <!-- Home Page -->
+        <div id="page-home" class="page-content active">
+            <div class="text-center mb-16">
+                <p class="bismillah font-arabic">بسم الله الرحمن الرحيم</p>
+                <h1 class="text-5xl md:text-7xl font-heading font-bold text-slate-800 mb-6">
+                    Welcome to <span class="text-gold-gradient">Iraq InfoHub</span>
+                </h1>
+                <div class="section-divider">
+                    <span class="section-divider-icon">✦</span>
+                </div>
+                <p class="text-xl md:text-2xl font-body text-slate-600 max-w-4xl mx-auto leading-relaxed">
+                    Explore the rich history, culture, and modern developments of Iraq through our comprehensive information platform with AI-powered auto-summaries.
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+                <div onclick="loadPage('history')" class="feature-card bg-white p-8 rounded-2xl shadow-lg cursor-pointer">
+                    <div class="w-16 h-16 icon-circle rounded-xl flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-heading font-semibold text-slate-800 mb-3">Ancient History</h3>
+                    <p class="font-body text-slate-600 leading-relaxed">Discover Mesopotamia, Babylon, and the cradle of civilization where writing began.</p>
+                </div>
+                
+                <div onclick="loadPage('culture')" class="feature-card bg-white p-8 rounded-2xl shadow-lg cursor-pointer">
+                    <div class="w-16 h-16 icon-circle rounded-xl flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-heading font-semibold text-slate-800 mb-3">Culture & Arts</h3>
+                    <p class="font-body text-slate-600 leading-relaxed">Explore Iraqi traditions, music, literature, calligraphy, and cultural heritage.</p>
+                </div>
+                
+                <div onclick="loadPage('geography')" class="feature-card bg-white p-8 rounded-2xl shadow-lg cursor-pointer">
+                    <div class="w-16 h-16 icon-circle rounded-xl flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-heading font-semibold text-slate-800 mb-3">Geography</h3>
+                    <p class="font-body text-slate-600 leading-relaxed">Learn about the Tigris, Euphrates, mountains, and diverse landscapes.</p>
+                </div>
+                
+                <div onclick="loadPage('economy')" class="feature-card bg-white p-8 rounded-2xl shadow-lg cursor-pointer">
+                    <div class="w-16 h-16 icon-circle rounded-xl flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-heading font-semibold text-slate-800 mb-3">Economy</h3>
+                    <p class="font-body text-slate-600 leading-relaxed">Understand oil resources, trade, agriculture, and economic development.</p>
+                </div>
+                
+                <div onclick="loadPage('tech')" class="feature-card bg-white p-8 rounded-2xl shadow-lg cursor-pointer">
+                    <div class="w-16 h-16 icon-circle rounded-xl flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-heading font-semibold text-slate-800 mb-3">Tech Fundamentals</h3>
+                    <p class="font-body text-slate-600 leading-relaxed">Learn how this auto-summary feature works with modern web technologies.</p>
+                </div>
+                
+                <div class="feature-card bg-gradient-to-br from-slate-800 via-slate-900 to-slate-800 p-8 rounded-2xl shadow-lg text-white border-yellow-600/50">
+                    <div class="w-16 h-16 rounded-xl bg-gradient-to-br from-yellow-500 to-yellow-700 flex items-center justify-center mb-6 border-2 border-yellow-400">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-heading font-semibold mb-3">AI Summary Feature</h3>
+                    <p class="text-yellow-100/80 font-body leading-relaxed">Every page auto-summarizes when you open it. Revolutionary feature!</p>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-2xl shadow-xl p-10 ornament-border border border-yellow-600/20">
+                <h2 class="text-3xl font-heading font-bold text-slate-800 mb-8 text-center section-header">How It Works</h2>
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="text-center">
+                        <div class="w-20 h-20 rounded-full bg-gradient-to-br from-yellow-500 to-yellow-700 flex items-center justify-center mx-auto mb-6 shadow-lg border-4 border-yellow-300">
+                            <span class="text-3xl font-heading font-bold text-white">1</span>
+                        </div>
+                        <h4 class="font-heading font-semibold text-xl text-slate-800 mb-3">Click Any Page</h4>
+                        <p class="font-body text-slate-600 leading-relaxed">Navigate to any section using the menu or feature cards above.</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-20 h-20 rounded-full bg-gradient-to-br from-yellow-500 to-yellow-700 flex items-center justify-center mx-auto mb-6 shadow-lg border-4 border-yellow-300">
+                            <span class="text-3xl font-heading font-bold text-white">2</span>
+                        </div>
+                        <h4 class="font-heading font-semibold text-xl text-slate-800 mb-3">Auto-Summary Loads</h4>
+                        <p class="font-body text-slate-600 leading-relaxed">The AI analyzes the page content in milliseconds automatically.</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-20 h-20 rounded-full bg-gradient-to-br from-yellow-500 to-yellow-700 flex items-center justify-center mx-auto mb-6 shadow-lg border-4 border-yellow-300">
+                            <span class="text-3xl font-heading font-bold text-white">3</span>
+                        </div>
+                        <h4 class="font-heading font-semibold text-xl text-slate-800 mb-3">Get Key Insights</h4>
+                        <p class="font-body text-slate-600 leading-relaxed">A concise summary appears at the top for quick understanding.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- History Page -->
+        <div id="page-history" class="page-content hidden">
+            <div class="bg-white rounded-2xl shadow-xl p-10 mb-10 ornament-border border border-yellow-600/20">
+                <h1 class="text-4xl font-heading font-bold text-slate-800 mb-8 text-center section-header">History of Iraq</h1>
+                <div class="image-container mb-8">
+                    <img src="https://image.qwenlm.ai/public_source/984fee57-4bd4-4af1-ac81-18d6db5eac0b/149da9b2f-ece7-42ce-8c38-50d8d599281a.png" alt="Ancient Iraq" class="w-full h-80 object-cover">
+                </div>
+                
+                <div class="font-body text-slate-700 space-y-6 text-lg leading-relaxed">
+                    <p class="drop-cap">
+                        Iraq, historically known as Mesopotamia, is widely recognized as the cradle of civilization. The region between the Tigris and Euphrates rivers witnessed the emergence of the world's first cities around 4500 BCE. The Sumerian civilization pioneered writing through cuneiform script, invented the wheel, and established the first legal codes and administrative systems.
+                    </p>
+                    <p>
+                        The Babylonian Empire rose to prominence under Hammurabi around 1792 BCE, creating one of history's earliest and most comprehensive legal codes. Babylon became legendary for its Hanging Gardens, one of the Seven Wonders of the Ancient World. The city served as a center of learning, trade, and culture for centuries.
+                    </p>
+                    <p>
+                        The Assyrian Empire, centered in northern Iraq, became the largest empire the world had seen by the 7th century BCE. Known for military innovation and efficient administration, Assyria controlled vast territories from Egypt to Persia. Their capitals at Nineveh and Ashur housed magnificent libraries and palaces.
+                    </p>
+                    <p>
+                        In 762 CE, the Abbasid Caliphate founded Baghdad, which quickly became the intellectual center of the Islamic Golden Age. The House of Wisdom attracted scholars from across the world, translating and preserving Greek, Persian, and Indian knowledge. Baghdad's population exceeded one million, making it the largest city in the world at that time.
+                    </p>
+                    <p>
+                        The Mongol siege of Baghdad in 1258 marked a catastrophic turning point. The city was destroyed, its libraries burned, and hundreds of thousands killed. This event effectively ended the Islamic Golden Age and devastated Iraq's infrastructure for centuries. The region subsequently passed through Ottoman and British control before gaining independence in 1932.
+                    </p>
+                    <p>
+                        Modern Iraq has experienced significant political changes, including the monarchy period, republican revolutions, and various conflicts. Despite challenges, Iraq remains home to some of humanity's most important archaeological sites, including Ur, Uruk, Babylon, and Nineveh, continuing to reveal insights into our collective past.
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Culture Page -->
+        <div id="page-culture" class="page-content hidden">
+            <div class="bg-white rounded-2xl shadow-xl p-10 mb-10 ornament-border border border-yellow-600/20">
+                <h1 class="text-4xl font-heading font-bold text-slate-800 mb-8 text-center section-header">Culture & Heritage</h1>
+                <div class="image-container mb-8">
+                    <img src="https://images.unsplash.com/photo-1590053163167-9e8d8c6e6b1e?w=1200" alt="Iraqi Culture" class="w-full h-80 object-cover">
+                </div>
+                
+                <div class="font-body text-slate-700 space-y-6 text-lg leading-relaxed">
+                    <p>
+                        Iraqi culture represents one of the world's oldest continuous cultural traditions, spanning over 6,000 years. The country's diverse population includes Arabs, Kurds, Turkmens, Assyrians, Yazidis, and other ethnic groups, each contributing unique traditions to the national tapestry.
+                    </p>
+                    <p>
+                        Arabic and Kurdish are the official languages, with Arabic being the most widely spoken. The Iraqi Arabic dialect has distinctive features influenced by ancient Mesopotamian languages. Kurdish, primarily spoken in the northern regions, has several dialects including Sorani and Kurmanji.
+                    </p>
+                    <p>
+                        Islam is the predominant religion, with approximately 60-65% Shia and 32-37% Sunni Muslims. Iraq also hosts ancient Christian communities dating back to the first century CE, along with Yazidi, Mandean, and other religious minorities. This religious diversity has shaped Iraqi culture profoundly.
+                    </p>
+                    <p>
+                        Iraqi cuisine is renowned throughout the Middle East. Signature dishes include masgouf (grilled fish), quzi (lamb with rice), dolma (stuffed vegetables), and various kebabs. Dates are a staple food and major export, with Iraq once producing over 70% of the world's dates.
+                    </p>
+                    <p>
+                        Music and poetry hold special places in Iraqi culture. The maqam musical tradition is recognized by UNESCO as Intangible Cultural Heritage. Famous poets like Al-Mutanabbi and Badr Shakir al-Sayyab have contributed to Arabic literature's golden age.
+                    </p>
+                    <p>
+                        Traditional arts include calligraphy, miniature painting, carpet weaving, and pottery. Iraqi handicrafts reflect influences from Sumerian, Babylonian, Assyrian, and Islamic periods. Hospitality remains a core cultural value, with guests treated with exceptional generosity and respect.
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Geography Page -->
+        <div id="page-geography" class="page-content hidden">
+            <div class="bg-white rounded-2xl shadow-xl p-10 mb-10 ornament-border border border-yellow-600/20">
+                <h1 class="text-4xl font-heading font-bold text-slate-800 mb-8 text-center section-header">Geography & Landscape</h1>
+                <div class="image-container mb-8">
+                    <img src="https://images.unsplash.com/photo-1548625361-88c900a48688?w=1200" alt="Iraq Landscape" class="w-full h-80 object-cover">
+                </div>
+                
+                <div class="font-body text-slate-700 space-y-6 text-lg leading-relaxed">
+                    <p>
+                        Iraq is located in Western Asia, bordered by Turkey to the north, Iran to the east, Kuwait to the southeast, Saudi Arabia to the south, Jordan to the southwest, and Syria to the west. The country has a narrow 58 km coastline on the Persian Gulf.
+                    </p>
+                    <p>
+                        The Tigris and Euphrates rivers define Iraq's geography and history. These rivers originate in Turkey, flow through Iraq, and merge to form the Shatt al-Arab before emptying into the Persian Gulf. The fertile alluvial plain between them supported ancient civilizations and remains crucial for agriculture.
+                    </p>
+                    <p>
+                        Northern Iraq features mountainous terrain as part of the Zagros mountain range. These areas experience cold winters with heavy snowfall, contrasting with the hot, arid central and southern plains. The highest point is Cheekha Dar at 3,611 meters.
+                    </p>
+                    <p>
+                        The climate is predominantly arid continental, with mild to cool winters and hot, dry summers. Temperatures in southern Iraq can exceed 50°C (122°F) during July and August. Rainfall occurs mainly between November and April, averaging 100-200mm annually in most regions.
+                    </p>
+                    <p>
+                        The Mesopotamian Marshes in southern Iraq were once the largest wetland ecosystem in the Middle East. Largely drained in the 1990s, restoration efforts have recovered approximately 50% of the original marshlands, providing crucial habitat for migratory birds and supporting local Marsh Arab communities.
+                    </p>
+                    <p>
+                        Iraq's natural resources include significant oil reserves (fifth largest globally), natural gas, phosphates, and sulfur. The country's strategic location at the crossroads of Asia, Europe, and Africa has made it historically important for trade and cultural exchange.
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Economy Page -->
+        <div id="page-economy" class="page-content hidden">
+            <div class="bg-white rounded-2xl shadow-xl p-10 mb-10 ornament-border border border-yellow-600/20">
+                <h1 class="text-4xl font-heading font-bold text-slate-800 mb-8 text-center section-header">Economy & Resources</h1>
+                <div class="image-container mb-8">
+                    <img src="https://images.unsplash.com/photo-1518182170546-0766ce6fec56?w=1200" alt="Iraq Economy" class="w-full h-80 object-cover">
+                </div>
+                
+                <div class="font-body text-slate-700 space-y-6 text-lg leading-relaxed">
+                    <p>
+                        Iraq's economy is heavily dependent on the oil sector, which accounts for approximately 95% of foreign exchange earnings and about 85% of government revenue. The country possesses the world's fifth-largest proven oil reserves, estimated at over 145 billion barrels.
+                    </p>
+                    <p>
+                        Despite vast oil wealth, decades of war, international sanctions, and mismanagement have hindered economic development. Infrastructure damage from conflicts has affected power grids, refineries, and transportation networks, requiring significant reconstruction investment.
+                    </p>
+                    <p>
+                        The public sector employs the majority of the workforce, creating a bloated wage bill that strains the national budget. Youth unemployment remains a critical challenge, contributing to social unrest and economic instability in various regions.
+                    </p>
+                    <p>
+                        Agriculture once formed the backbone of Iraq's economy and remains important for food security. The sector produces dates, wheat, barley, rice, vegetables, and livestock. However, water scarcity, outdated techniques, and conflict have reduced agricultural output significantly.
+                    </p>
+                    <p>
+                        Efforts to diversify the economy include developing manufacturing, tourism, and services sectors. Iraq's archaeological sites hold enormous tourism potential, though security concerns have limited this industry's growth. The government seeks foreign investment to modernize infrastructure and increase production capacity.
+                    </p>
+                    <p>
+                        Corruption and bureaucratic inefficiency remain significant obstacles to economic growth. The government has implemented reforms to improve the business climate, attract foreign direct investment, and reduce dependence on oil revenues for long-term economic stability.
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Tech Fundamentals Page -->
+        <div id="page-tech" class="page-content hidden">
+            <div class="bg-white rounded-2xl shadow-xl p-10 mb-10 ornament-border border border-yellow-600/20">
+                <h1 class="text-4xl font-heading font-bold text-slate-800 mb-8 text-center section-header">Technical Fundamentals</h1>
+                
+                <div class="grid md:grid-cols-2 gap-8 mb-10">
+                    <div class="bg-gradient-to-br from-blue-50 to-blue-100 p-8 rounded-xl border-l-4 border-blue-600">
+                        <h3 class="font-heading font-bold text-blue-800 mb-4 text-xl">1. HTML5 Semantic Structure</h3>
+                        <p class="font-body text-slate-700 mb-4 leading-relaxed">
+                            Using semantic tags like <code class="bg-blue-200 px-2 py-1 rounded text-sm">&lt;nav&gt;</code>, <code class="bg-blue-200 px-2 py-1 rounded text-sm">&lt;main&gt;</code>, <code class="bg-blue-200 px-2 py-1 rounded text-sm">&lt;section&gt;</code> improves accessibility and SEO.
+                        </p>
+                        <div class="bg-white p-4 rounded-lg text-xs font-mono text-slate-700 border border-blue-200">
+                            &lt;nav&gt;Navigation&lt;/nav&gt;<br>
+                            &lt;main&gt;Content&lt;/main&gt;<br>
+                            &lt;section&gt;Sections&lt;/section&gt;
+                        </div>
+                    </div>
+                    
+                    <div class="bg-gradient-to-br from-green-50 to-green-100 p-8 rounded-xl border-l-4 border-green-600">
+                        <h3 class="font-heading font-bold text-green-800 mb-4 text-xl">2. CSS Animations</h3>
+                        <p class="font-body text-slate-700 mb-4 leading-relaxed">
+                            Keyframes define animation steps. Applied with <code class="bg-green-200 px-2 py-1 rounded text-sm">animation</code> property for smooth transitions.
+                        </p>
+                        <div class="bg-white p-4 rounded-lg text-xs font-mono text-slate-700 border border-green-200">
+                            @keyframes slideDown {<br>
+                            &nbsp;&nbsp;from { top: -300px; }<br>
+                            &nbsp;&nbsp;to { top: 0; }<br>
+                            }
+                        </div>
+                    </div>
+                    
+                    <div class="bg-gradient-to-br from-purple-50 to-purple-100 p-8 rounded-xl border-l-4 border-purple-600">
+                        <h3 class="font-heading font-bold text-purple-800 mb-4 text-xl">3. JavaScript DOM</h3>
+                        <p class="font-body text-slate-700 mb-4 leading-relaxed">
+                            Select elements with <code class="bg-purple-200 px-2 py-1 rounded text-sm">getElementById</code> and modify properties dynamically.
+                        </p>
+                        <div class="bg-white p-4 rounded-lg text-xs font-mono text-slate-700 border border-purple-200">
+                            const bar = document<br>
+                            .getElementById('summary-bar');<br>
+                            bar.classList.add('visible');
+                        </div>
+                    </div>
+                    
+                    <div class="bg-gradient-to-br from-yellow-50 to-yellow-100 p-8 rounded-xl border-l-4 border-yellow-600">
+                        <h3 class="font-heading font-bold text-yellow-800 mb-4 text-xl">4. Event Listeners</h3>
+                        <p class="font-body text-slate-700 mb-4 leading-relaxed">
+                            Listen for user actions like clicks, scrolls, and page loads to trigger functions.
+                        </p>
+                        <div class="bg-white p-4 rounded-lg text-xs font-mono text-slate-700 border border-yellow-200">
+                            element.addEventListener<br>
+                            ('click', function() {<br>
+                            &nbsp;&nbsp;// Handle click<br>
+                            });
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-gradient-to-br from-slate-50 to-slate-100 p-8 rounded-xl border border-slate-300">
+                    <h3 class="font-heading font-bold text-slate-800 mb-6 text-2xl text-center section-header">How The Auto-Summary Works</h3>
+                    <ol class="space-y-4 font-body text-slate-700">
+                        <li class="flex items-start gap-4">
+                            <span class="w-8 h-8 bg-gradient-to-br from-yellow-500 to-yellow-700 text-white rounded-full flex items-center justify-center text-sm flex-shrink-0 font-heading font-bold border-2 border-yellow-400">1</span>
+                            <span class="leading-relaxed">Page load triggers <code class="bg-slate-200 px-2 py-1 rounded text-sm">DOMContentLoaded</code> event</span>
+                        </li>
+                        <li class="flex items-start gap-4">
+                            <span class="w-8 h-8 bg-gradient-to-br from-yellow-500 to-yellow-700 text-white rounded-full flex items-center justify-center text-sm flex-shrink-0 font-heading font-bold border-2 border-yellow-400">2</span>
+                            <span class="leading-relaxed">JavaScript extracts text content from the active page section</span>
+                        </li>
+                        <li class="flex items-start gap-4">
+                            <span class="w-8 h-8 bg-gradient-to-br from-yellow-500 to-yellow-700 text-white rounded-full flex items-center justify-center text-sm flex-shrink-0 font-heading font-bold border-2 border-yellow-400">3</span>
+                            <span class="leading-relaxed">Pre-written summaries are matched to each page (simulating AI)</span>
+                        </li>
+                        <li class="flex items-start gap-4">
+                            <span class="w-8 h-8 bg-gradient-to-br from-yellow-500 to-yellow-700 text-white rounded-full flex items-center justify-center text-sm flex-shrink-0 font-heading font-bold border-2 border-yellow-400">4</span>
+                            <span class="leading-relaxed">Summary bar slides down with CSS transition animation</span>
+                        </li>
+                        <li class="flex items-start gap-4">
+                            <span class="w-8 h-8 bg-gradient-to-br from-yellow-500 to-yellow-700 text-white rounded-full flex items-center justify-center text-sm flex-shrink-0 font-heading font-bold border-2 border-yellow-400">5</span>
+                            <span class="leading-relaxed">Text appears with typing effect for engaging UX</span>
+                        </li>
+                    </ol>
+                </div>
+                
+                <div class="mt-10 bg-gradient-to-r from-slate-800 via-slate-900 to-slate-800 text-white p-8 rounded-xl border-2 border-yellow-600/50">
+                    <h3 class="font-heading font-bold mb-4 text-2xl flex items-center gap-3">
+                        <span>🚀</span> Production Implementation
+                    </h3>
+                    <p class="font-body text-yellow-100/90 leading-relaxed">
+                        For real AI summarization, integrate APIs like OpenAI GPT, Google Cloud NLP, or Hugging Face models. Send page content to the API endpoint and display the returned summary. Add caching to avoid re-summarizing the same content. This demo uses pre-written summaries to simulate the AI experience.
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+    </main>
+    
+    <!-- Footer -->
+    <footer class="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-white py-12 mt-16 border-t-4 border-yellow-600/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <div class="flex items-center justify-center gap-3 mb-6">
+                    <div class="w-10 h-10 rounded-full bg-gradient-to-br from-yellow-500 to-yellow-700 flex items-center justify-center shadow-lg border-2 border-yellow-400">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                    <span class="text-2xl font-heading font-bold text-gold-gradient">Iraq InfoHub</span>
+                </div>
+                <p class="font-body text-yellow-100/70 text-lg mb-4">Cradle of Civilization • Est. 4500 BCE</p>
+                <div class="section-divider">
+                    <span class="section-divider-icon text-yellow-500">✦</span>
+                </div>
+                <p class="font-body text-yellow-200/50 text-sm mt-6">© 2024 Iraq InfoHub. Built with HTML, CSS, JavaScript & AI Auto-Summary Feature.</p>
+                <p class="arabic-decor font-arabic mt-6">العراق - مهد الحضارة</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // Page Summaries (Simulating AI Analysis)
+        const pageSummaries = {
+            home: "Welcome to Iraq InfoHub! This platform provides comprehensive information about Iraq's history, culture, geography, and economy. Navigate through different sections using the menu or feature cards. Each page automatically generates an AI summary at the top for quick insights.",
+            
+            history: "Iraq is the cradle of civilization, home to ancient Sumer, Babylon, and Assyria. The region pioneered writing, law, and urbanization around 4500 BCE. Baghdad became the Islamic Golden Age's intellectual center in 762 CE. Despite the devastating 1258 Mongol siege, Iraq preserves humanity's most important archaeological sites.",
+            
+            culture: "Iraqi culture spans 6,000+ years with diverse ethnic groups including Arabs, Kurds, and Assyrians. Arabic and Kurdish are official languages. Islam predominates with Shia and Sunni communities, plus ancient Christian and Yazidi minorities. Iraqi cuisine, music (maqam), poetry, and hospitality traditions remain culturally significant.",
+            
+            geography: "Iraq lies in Western Asia between the Tigris and Euphrates rivers. The northern Zagros mountains contrast with southern arid plains. Climate is arid continental with hot summers exceeding 50°C. The Mesopotamian Marshes, partially restored, support unique ecosystems. Iraq holds the world's 5th largest oil reserves.",
+            
+            economy: "Oil dominates Iraq's economy (95% of exports, 85% government revenue) with 145+ billion barrels in reserves. War and sanctions hindered development despite vast wealth. Public sector employs most workers; youth unemployment is critical. Agriculture produces dates and grains. Diversification and anti-corruption reforms are ongoing priorities.",
+            
+            tech: "This auto-summary feature uses HTML5 semantic structure, CSS animations for smooth transitions, JavaScript DOM manipulation for dynamic content, and event listeners for user interactions. Page content is extracted and matched with pre-written summaries. Production versions integrate AI APIs like OpenAI GPT for real-time summarization."
+        };
+        
+        let currentPage = 'home';
+        
+        // Load Page Function
+        function loadPage(pageName) {
+            // Hide all pages
+            document.querySelectorAll('.page-content').forEach(page => {
+                page.classList.remove('active');
+                page.classList.add('hidden');
+            });
+            
+            // Show selected page
+            const selectedPage = document.getElementById(`page-${pageName}`);
+            selectedPage.classList.remove('hidden');
+            
+            // Trigger reflow for animation
+            void selectedPage.offsetWidth;
+            selectedPage.classList.add('active');
+            
+            // Update navigation
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+                if (link.dataset.page === pageName) {
+                    link.classList.add('active');
+                }
+            });
+            
+            currentPage = pageName;
+            
+            // Trigger summary generation
+            generateSummary(pageName);
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        
+        // Generate Summary (Simulating AI)
+        function generateSummary(pageName) {
+            const summaryBar = document.getElementById('summary-bar');
+            const summaryLoading = document.getElementById('summary-loading');
+            const summaryText = document.getElementById('summary-text');
+            
+            // Reset state
+            summaryBar.classList.remove('visible');
+            summaryText.classList.add('hidden');
+            summaryLoading.classList.remove('hidden');
+            summaryText.textContent = '';
+            
+            // Show summary bar after short delay (simulating processing)
+            setTimeout(() => {
+                summaryBar.classList.add('visible');
+                
+                // Hide loading, show text after animation
+                setTimeout(() => {
+                    summaryLoading.classList.add('hidden');
+                    summaryText.classList.remove('hidden');
+                    
+                    // Type out the summary
+                    typeSummary(pageSummaries[pageName], summaryText);
+                }, 800);
+            }, 300);
+        }
+        
+        // Typing Effect
+        function typeSummary(text, element) {
+            element.textContent = '';
+            let i = 0;
+            const speed = 25; // ms per character
+            
+            function type() {
+                if (i < text.length) {
+                    element.textContent += text.charAt(i);
+                    i++;
+                    setTimeout(type, speed);
+                }
+            }
+            
+            type();
+        }
+        
+        // Close Summary
+        function closeSummary() {
+            document.getElementById('summary-bar').classList.remove('visible');
+        }
+        
+        // Toggle Mobile Menu
+        function toggleMobileMenu() {
+            document.getElementById('mobile-menu').classList.toggle('open');
+        }
+        
+        // Scroll Progress
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById('scroll-progress').style.width = scrolled + '%';
+        });
+        
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            generateSummary('home');
+        });
+    </script>
+</body>
+</html>
+
